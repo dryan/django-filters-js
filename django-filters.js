@@ -105,11 +105,11 @@ if(!window['django']) {
 	}
 	
 	django.ordinal = function( number ) {
-		try {
-			number = parseInt(number, 10);
-		} catch(e) {
+		var num = parseInt(number, 10);
+		if(isNaN(num)) {
 			return number;
 		}
+		number = num;
 		var suffixes = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'];
 		if($.inArray(number % 100, [11, 12, 13]) > -1) {
 			return [number, suffixes[0]].join('');
