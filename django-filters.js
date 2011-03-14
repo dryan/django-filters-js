@@ -98,4 +98,9 @@ if(!window['django']) {
 		number = parseInt( number, 10 );
 		return number;
 	}
+	
+	django.slugify = function( str ) {
+		str = $.trim(str);
+		return str.replace(/[^a-zA-Z0-9-._~]/g, '-').toLowerCase();
+	}
 })();
