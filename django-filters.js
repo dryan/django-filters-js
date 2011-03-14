@@ -103,4 +103,17 @@ if(!window['django']) {
 		str = $.trim(str);
 		return str.replace(/[^a-zA-Z0-9-._~]/g, '-').toLowerCase();
 	}
+	
+	django.ordinal = function( number ) {
+		try {
+			number = parseInt(number, 10);
+		} catch(e) {
+			return number;
+		}
+		var suffixes = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'];
+		if($.inArray(number % 100, [11, 12, 13]) > -1) {
+			return [number, suffixes[0]].join('');
+		}
+		return [number, suffixes[number % 10]].join('');
+	}
 })();
