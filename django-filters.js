@@ -104,8 +104,8 @@ if(!django.filters) {
 	django.filters.apnumber_reverse = function( number ) {
 	    var origNumber  =   number;
 		number = utils.trim(number);
-		for (var i = django.filters.apnumber.numbers.length - 1; i >= 0; i--) {
-		    if(number == django.filters.apnumber.numbers[i]) {
+		for (var i = django.filters.apnumber.numbers.current.length - 1; i >= 0; i--) {
+		    if(number == django.filters.apnumber.numbers.current[i]) {
 		        return i;
 		    }
 		};
