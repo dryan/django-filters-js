@@ -9,7 +9,7 @@ if(!django.filters) {
 
 (function(){
     
-    var utils   =   {
+    django.filters.utils   =   {
         // borrowed from jQuery
         'trim': typeof String.prototype.trim ?  function( text ) {
                             return text == null ? "" : String.prototype.trim.call( text );
@@ -34,9 +34,11 @@ if(!django.filters) {
     	'l_pad':        function(obj, len, pad) {
                             obj =   obj.toString();
                             pad =   pad.toString();
-                            while(obj.length < len) {
-                                obj =   pad + obj;
+                            var padding =   "";
+                            while(padding.length < len) {
+                                padding =   pad + padding;
                             }
+                            obj =   padding.substr(0, len - obj.length) + obj;
                             return obj;
                         },
     	'r_pad':        function(obj, len, pad) {
@@ -45,10 +47,13 @@ if(!django.filters) {
                             while(obj.length < len) {
                                 obj =   obj + pad;
                             }
+                            obj =   obj.substr(0, len);
                             return obj;
                         }
         
     }
+    
+    var utils   =   django.filters.utils;
 
 	django.filters.intcomma = function( number ) {
 		origNumber = number;
