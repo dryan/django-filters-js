@@ -56,7 +56,7 @@ if(!django.filters) {
     var utils   =   django.filters.utils;
 
 	django.filters.intcomma = function( number ) {
-		origNumber = number;
+		var origNumber = number;
 		number = parseInt( number, 10 );
 		if( isNaN(number) ) {
 			return origNumber;
@@ -72,11 +72,11 @@ if(!django.filters) {
 	}
 
 	django.filters.apnumber = function( number ) {
-	    try {
-    		number = parseInt( number, 10 );
-	    } catch(e) {
-	        return number;
-	    }
+	    var origNumber  =   number;
+		number = parseInt( number, 10 );
+		if( isNaN(number) ) {
+			return origNumber;
+		}
 		return django.filters.apnumber.numbers.current[number] || String(number);
 	}
 
@@ -102,15 +102,17 @@ if(!django.filters) {
     }
 
 	django.filters.apnumber_reverse = function( number ) {
+	    var origNumber  =   number;
 		number = utils.trim(number);
 		for (var i = django.filters.apnumber.numbers.length - 1; i >= 0; i--) {
 		    if(number == django.filters.apnumber.numbers[i]) {
 		        return i;
 		    }
 		};
-		try {
-    		number = parseInt( number, 10 );
-		} catch(e) {}
+		number = parseInt( number, 10 );
+		if( isNaN(number) ) {
+		    number  =   origNumber;
+		}
 		return number;
 	}
 	
