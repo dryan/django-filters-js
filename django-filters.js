@@ -116,9 +116,12 @@ if(!django.filters) {
 		return number;
 	}
 	
-	django.filters.slugify = function( str ) {
-		str = utils.trim(str);
-		return str.replace(/[^a-zA-Z0-9-._~]/g, '-').toLowerCase();
+	django.filters.slugify = function( str, maxLength ) {
+		str =   utils.trim(str).replace(/[^a-zA-Z0-9-._~]/g, '-').toLowerCase();
+		if(maxLength && isFinite(maxLength)) {
+		    str =   str.substr(0, maxLength);
+		}
+		return str.replace(/^-+/, '').replace(/-+$/, '').replace(/-+/g, '-');
 	}
 	
 	django.filters.ordinal = function( number ) {
