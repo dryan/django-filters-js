@@ -257,7 +257,7 @@ if(!django.filters) {
             'Y':    date.getFullYear(),
             'z':    Math.ceil( ( date - jan1 ) / 86400000 ),
             'Z':    (function(date) {
-                        var offsetSeconds =   date.getTimezoneOffset() * 60;
+                        var offsetSeconds =   date.getTimezoneOffset() * 60 * -1;
                         return (offsetSeconds < 0 ? '-' : '') + utils.r_pad(Math.abs(offsetSeconds), 5, 0);
                     })(date)
         }
