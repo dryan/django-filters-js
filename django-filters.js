@@ -3,8 +3,54 @@ if(!window['django']) {
 	var django = window['django'];
 }
 
+if(!django.filters) {
+    django.filters  =   {};
+}
+
 (function(){
-	django.intcomma = function( number ) {
+    
+    var utils   =   {
+        // borrowed from jQuery
+        'trim': typeof String.prototype.trim ?  function( text ) {
+                            return text == null ? "" : String.prototype.trim.call( text );
+                        } : 
+                        function( text ) {
+                            return text == null ? "" : text.toString().replace(/^\s+/, "").replace(/\s+$/, "");
+                        },
+        // borrowed from jQuery
+        'inArray':      function( elem, array ) {
+                    		if ( Array.prototype.indexOf ) {
+                    			return Array.prototype.indexOf.call( array, elem );
+                    		}
+
+                    		for ( var i = 0, length = array.length; i < length; i++ ) {
+                    			if ( array[ i ] === elem ) {
+                    				return i;
+                    			}
+                    		}
+
+                    		return -1;
+    	                },
+    	'l_pad':        function(obj, len, pad) {
+                            obj =   obj.toString();
+                            pad =   pad.toString();
+                            while(obj.length < len) {
+                                obj =   pad + obj;
+                            }
+                            return obj;
+                        },
+    	'r_pad':        function(obj, len, pad) {
+                            obj =   obj.toString();
+                            pad =   pad.toString();
+                            while(obj.length < len) {
+                                obj =   obj + pad;
+                            }
+                            return obj;
+                        }
+        
+    }
+
+	django.filters.intcomma = function( number ) {
 		origNumber = number;
 		number = parseInt( number, 10 );
 		if( isNaN(number) ) {
@@ -20,100 +66,74 @@ if(!window['django']) {
 		return number;
 	}
 
-	django.apnumber = function( number ) {
-		number = parseInt( number, 10 );
-		switch(number) {
-			case 0:
-				number = 'zero';
-				break;
-			case 1:
-				number = 'one';
-				break;
-			case 2:
-				number = 'two';
-				break;
-			case 3:
-				number = 'three';
-				break;
-			case 4:
-				number = 'four';
-				break;
-			case 5:
-				number = 'five';
-				break;
-			case 6:
-				number = 'six';
-				break;
-			case 7:
-				number = 'seven';
-				break;
-			case 8:
-				number = 'eight';
-				break;
-			case 9:
-				number = 'nine';
-				break;
-			default:
-				break;
-		}
-		return number;
+	django.filters.apnumber = function( number ) {
+	    try {
+    		number = parseInt( number, 10 );
+	    } catch(e) {
+	        return number;
+	    }
+		return django.filters.apnumber.numbers.current[number] || String(number);
 	}
 
-	django.apnumber_reverse = function( number ) {
-		number = $.trim(number);
-		switch(number) {
-			case 'zero':
-				number = 0;
-				break;
-			case 'one':
-				number = 1;
-				break;
-			case 'two':
-				number = 2;
-				break;
-			case 'three':
-				number = 3;
-				break;
-			case 'four':
-				number = 4;
-				break;
-			case 'five':
-				number = 5;
-				break;
-			case 'six':
-				number = 6;
-				break;
-			case 'seven':
-				number = 7;
-				break;
-			case 'eight':
-				number = 8;
-				break;
-			case 'nine':
-				number = 9;
-				break;
-			default:
-				break;
-		}
-		number = parseInt( number, 10 );
+	django.filters.apnumber.numbers =   {
+	    'en-us':    [
+	        'zero',
+	        'one',
+	        'two',
+	        'three',
+	        'four',
+	        'five',
+	        'six',
+	        'seven',
+	        'eight',
+	        'nine'
+	    ]
+	};
+	django.filters.apnumber.numbers['en']   =   django.filters.apnumber.numbers['en-us'];
+	if(navigator.language && django.filters.apnumber.numbers[navigator.language]) {
+        django.filters.apnumber.numbers['current']  =   django.filters.apnumber.numbers[navigator.language];
+    } else {
+        django.filters.apnumber.numbers['current']  =   django.filters.apnumber.numbers['en-us'];
+    }
+
+	django.filters.apnumber_reverse = function( number ) {
+		number = utils.trim(number);
+		for (var i = django.filters.apnumber.numbers.length - 1; i >= 0; i--) {
+		    if(number == django.filters.apnumber.numbers[i]) {
+		        return i;
+		    }
+		};
+		try {
+    		number = parseInt( number, 10 );
+		} catch(e) {}
 		return number;
 	}
 	
-	django.slugify = function( str ) {
-		str = $.trim(str);
+	django.filters.slugify = function( str ) {
+		str = utils.trim(str);
 		return str.replace(/[^a-zA-Z0-9-._~]/g, '-').toLowerCase();
 	}
 	
-	django.ordinal = function( number ) {
+	django.filters.ordinal = function( number ) {
 		var num = parseInt(number, 10);
 		if(isNaN(num)) {
 			return number;
 		}
 		number = num;
-		var suffixes = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'];
-		if($.inArray(number % 100, [11, 12, 13]) > -1) {
-			return [number, suffixes[0]].join('');
+
+		var suffixes = {
+		    'en-us': ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
+	    };
+	    suffixes['en']  =   suffixes['en-us'];
+	    if(navigator.language && suffixes[navigator.language]) {
+            suffixes['current'] =   suffixes[navigator.language];
+        } else {
+            suffixes['current'] =   suffixes['en-us'];
+        }
+        
+		if(utils.inArray(number % 100, [11, 12, 13]) > -1) {
+			return [number, suffixes.current[0]].join('');
 		}
-		return [number, suffixes[number % 10]].join('');
+		return [number, suffixes.current[number % 10]].join('');
 	}
 })();
