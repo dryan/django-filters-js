@@ -238,8 +238,8 @@ var answers =   [
     }
 ]
 
-module(formats['a']);
-test('a', dates.length, function() {
+module('django.filters.date');
+test(formats['a'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -247,8 +247,7 @@ test('a', dates.length, function() {
     };
 });
 
-module(formats['A']);
-test('A', dates.length, function() {
+test(formats['A'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -256,8 +255,7 @@ test('A', dates.length, function() {
     };
 });
 
-module(formats['b']);
-test('b', dates.length, function() {
+test(formats['b'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -265,8 +263,7 @@ test('b', dates.length, function() {
     };
 });
 
-module(formats['c']);
-test('c', dates.length, function() {
+test(formats['c'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -274,8 +271,7 @@ test('c', dates.length, function() {
     };
 });
 
-module(formats['d']);
-test('d', dates.length, function() {
+test(formats['d'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -283,8 +279,7 @@ test('d', dates.length, function() {
     };
 });
 
-module(formats['D']);
-test('D', dates.length, function() {
+test(formats['D'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -292,8 +287,7 @@ test('D', dates.length, function() {
     };
 });
 
-module(formats['E']);
-test('E', dates.length, function() {
+test(formats['E'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -301,8 +295,7 @@ test('E', dates.length, function() {
     };
 });
 
-module(formats['f']);
-test('f', dates.length, function() {
+test(formats['f'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -310,8 +303,7 @@ test('f', dates.length, function() {
     };
 });
 
-module(formats['F']);
-test('F', dates.length, function() {
+test(formats['F'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -319,8 +311,7 @@ test('F', dates.length, function() {
     };
 });
 
-module(formats['g']);
-test('g', dates.length, function() {
+test(formats['g'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -328,8 +319,7 @@ test('g', dates.length, function() {
     };
 });
 
-module(formats['G']);
-test('G', dates.length, function() {
+test(formats['G'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -337,8 +327,7 @@ test('G', dates.length, function() {
     };
 });
 
-module(formats['h']);
-test('h', dates.length, function() {
+test(formats['h'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -346,8 +335,7 @@ test('h', dates.length, function() {
     };
 });
 
-module(formats['H']);
-test('H', dates.length, function() {
+test(formats['H'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -355,8 +343,7 @@ test('H', dates.length, function() {
     };
 });
 
-module(formats['i']);
-test('i', dates.length, function() {
+test(formats['i'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -364,8 +351,7 @@ test('i', dates.length, function() {
     };
 });
 
-module(formats['j']);
-test('j', dates.length, function() {
+test(formats['j'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -373,8 +359,7 @@ test('j', dates.length, function() {
     };
 });
 
-module(formats['l']);
-test('l', dates.length, function() {
+test(formats['l'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -382,8 +367,7 @@ test('l', dates.length, function() {
     };
 });
 
-module(formats['L']);
-test('L', dates.length, function() {
+test(formats['L'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -391,8 +375,7 @@ test('L', dates.length, function() {
     };
 });
 
-module(formats['m']);
-test('m', dates.length, function() {
+test(formats['m'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -400,8 +383,7 @@ test('m', dates.length, function() {
     };
 });
 
-module(formats['M']);
-test('M', dates.length, function() {
+test(formats['M'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -409,8 +391,7 @@ test('M', dates.length, function() {
     };
 });
 
-module(formats['n']);
-test('n', dates.length, function() {
+test(formats['n'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -418,8 +399,7 @@ test('n', dates.length, function() {
     };
 });
 
-module(formats['N']);
-test('N', dates.length, function() {
+test(formats['N'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -427,8 +407,7 @@ test('N', dates.length, function() {
     };
 });
 
-module(formats['O']);
-test('O', dates.length, function() {
+test(formats['O'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -436,8 +415,7 @@ test('O', dates.length, function() {
     };
 });
 
-module(formats['P']);
-test('P', dates.length, function() {
+test(formats['P'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -445,8 +423,7 @@ test('P', dates.length, function() {
     };
 });
 
-module(formats['r']);
-test('r', dates.length, function() {
+test(formats['r'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -454,8 +431,7 @@ test('r', dates.length, function() {
     };
 });
 
-module(formats['s']);
-test('s', dates.length, function() {
+test(formats['s'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -463,8 +439,7 @@ test('s', dates.length, function() {
     };
 });
 
-module(formats['S']);
-test('S', dates.length, function() {
+test(formats['S'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -472,8 +447,7 @@ test('S', dates.length, function() {
     };
 });
 
-module(formats['t']);
-test('t', dates.length, function() {
+test(formats['t'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -481,8 +455,7 @@ test('t', dates.length, function() {
     };
 });
 
-module(formats['T']);
-test('T', dates.length, function() {
+test(formats['T'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -490,8 +463,7 @@ test('T', dates.length, function() {
     };
 });
 
-module(formats['u']);
-test('u', dates.length, function() {
+test(formats['u'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -499,8 +471,7 @@ test('u', dates.length, function() {
     };
 });
 
-module(formats['U']);
-test('U', dates.length, function() {
+test(formats['U'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -508,8 +479,7 @@ test('U', dates.length, function() {
     };
 });
 
-module(formats['w']);
-test('w', dates.length, function() {
+test(formats['w'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -517,8 +487,7 @@ test('w', dates.length, function() {
     };
 });
 
-module(formats['W']);
-test('W', dates.length, function() {
+test(formats['W'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -526,8 +495,7 @@ test('W', dates.length, function() {
     };
 });
 
-module(formats['y']);
-test('y', dates.length, function() {
+test(formats['y'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -535,8 +503,7 @@ test('y', dates.length, function() {
     };
 });
 
-module(formats['Y']);
-test('Y', dates.length, function() {
+test(formats['Y'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -544,8 +511,7 @@ test('Y', dates.length, function() {
     };
 });
 
-module(formats['y']);
-test('y', dates.length, function() {
+test(formats['y'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -553,8 +519,7 @@ test('y', dates.length, function() {
     };
 });
 
-module(formats['z']);
-test('z', dates.length, function() {
+test(formats['z'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
@@ -562,8 +527,7 @@ test('z', dates.length, function() {
     };
 });
 
-module(formats['Z']);
-test('Z', dates.length, function() {
+test(formats['Z'], dates.length, function() {
     for (var i = dates.length - 1; i >= 0; i--) {
         var date    =   dates[i];
         var answer  =   answers[i];
