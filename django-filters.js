@@ -164,10 +164,10 @@ if(!window['django']) {
         var formats =   {
             'a':    (date.getHours() < 12 ? django.filters.date.meridians.current.ap.am : django.filters.date.meridians.current.ap.pm),
             'A':    (date.getHours() < 12 ? django.filters.date.meridians.current.normal.am : django.filters.date.meridians.current.normal.pm),
-            'b':    django.filters.date.months.current.short[date.getMonth()].toLowerCase(),
+            'b':    django.filters.date.months.current.s[date.getMonth()].toLowerCase(),
             'd':    utils.l_pad(date.getDate(), 2, 0),
-            'D':    django.filters.date.days.current.short[date.getDay()],
-            'E':    (django.filters.date.months.current.locale ? django.filters.date.months.current.locale[date.getMonth()] : django.filters.date.months.current.long[date.getMonth()]),
+            'D':    django.filters.date.days.current.s[date.getDay()],
+            'E':    (django.filters.date.months.current.locale ? django.filters.date.months.current.locale[date.getMonth()] : django.filters.date.months.current.l[date.getMonth()]),
             'f':    (function(date) {
                         var ret =   [normalize12Hours(date.getHours())];
                         if(date.getMinutes() !== 0) {
@@ -176,17 +176,17 @@ if(!window['django']) {
                         }
                         return ret.join('');
                     })(date),
-            'F':    django.filters.date.months.current.long[date.getMonth()],
+            'F':    django.filters.date.months.current.l[date.getMonth()],
             'g':    normalize12Hours(date.getHours()),
             'G':    date.getHours(),
             'h':    utils.l_pad(normalize12Hours(date.getHours()), 2, 0),
             'H':    utils.l_pad(date.getHours(), 2, 0),
             'i':    utils.l_pad(date.getMinutes(), 2, 0),
             'j':    date.getDate(),
-            'l':    django.filters.date.days.current.long[date.getDay()],
+            'l':    django.filters.date.days.current.l[date.getDay()],
             'L':    Boolean(new Date(date.getFullYear(), 1, 29).getDate() == 29),
             'm':    utils.l_pad(date.getMonth() + 1, 2, 0),
-            'M':    django.filters.date.months.current.short[date.getMonth()],
+            'M':    django.filters.date.months.current.s[date.getMonth()],
             'n':    date.getMonth() + 1,
             'N':    django.filters.date.months.current.ap[date.getMonth()],
             'O':    (function(date) {
@@ -299,54 +299,58 @@ if(!window['django']) {
     
     django.filters.date.months  =   {
         'en-us': {
-	        'long': [
-	            'January',
-	            'February',
-	            'March',
-	            'April',
-	            'May',
-	            'June',
-	            'July',
-	            'August',
-	            'September',
-	            'October',
-	            'November',
-	            'December'
-	        ],
-	        'short': [
-	            'Jan',
-	            'Feb',
-	            'Mar',
-	            'Apr',
-	            'May',
-	            'Jun',
-	            'Jul',
-	            'Aug',
-	            'Sep',
-	            'Oct',
-	            'Nov',
-	            'Dec'
-	        ],
-	        'ap': [
-	            'Jan.',
-	            'Feb.',
-	            'March',
-	            'April',
-	            'May',
-	            'June',
-	            'July',
-	            'Aug.',
-	            'Sept.',
-	            'Oct.',
-	            'Nov.',
-	            'Dec.'
-	        ]
+            // long
+            'l': [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            // short
+            's': [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+            ],
+            // A.P. style
+            'ap': [
+                'Jan.',
+                'Feb.',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'Aug.',
+                'Sept.',
+                'Oct.',
+                'Nov.',
+                'Dec.'
+            ]
         }
     };
     
     django.filters.date.days        =   {
         'en-us': {
-            'long': [
+            // long
+            'l': [
                 'Sunday',
                 'Monday',
                 'Tuesday',
@@ -355,7 +359,8 @@ if(!window['django']) {
                 'Friday',
                 'Saturday'
             ],
-            'short': [
+            // short
+            's': [
                 'Sun',
                 'Mon',
                 'Tue',
