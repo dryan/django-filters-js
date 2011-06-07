@@ -135,30 +135,20 @@ if(!window['django']) {
             return number;
         }
 
-		var suffixes = {
-		    'en-us': ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
-	    };
-	    suffixes['en']  =   suffixes['en-us'];
-	    if(navigator.language && suffixes[navigator.language]) {
-            suffixes['current'] =   suffixes[navigator.language];
-        } else {
-            suffixes['current'] =   suffixes['en-us'];
+        if(utils.inArray(num % 100, [11, 12, 13]) > -1) {
+            return [number, django.filters.ordinal.suffixes.current[0]].join('');
         }
-        
-		if(utils.inArray(number % 100, [11, 12, 13]) > -1) {
-			return [number, suffixes.current[0]].join('');
-		}
-		return [number, suffixes.current[number % 10]].join('');
-	}
-	
-	django.filters.date =   function(date, format) {
-	    /*
-	        To escape a character, use '%'; to print a literal '%', use '%%'.
-	        Otherwise, formatting follows https://docs.djangoproject.com/en/1.3/ref/templates/builtins/#date.
-	    */
-	    if(!date || ( date.toString && date.toString().toLowerCase() == 'invalid date' )) {
-	        return date;
-	    }
+        return [number, django.filters.ordinal.suffixes.current[num % 10]].join('');
+    }
+    
+    django.filters.date =   function(date, format) {
+        /*
+            To escape a character, use '%'; to print a literal '%', use '%%'.
+            Otherwise, formatting follows https://docs.djangoproject.com/en/1.3/ref/templates/builtins/#date.
+        */
+        if(!date || ( date.toString && date.toString().toLowerCase() == 'invalid date' )) {
+            return date;
+        }
         format      =   format || django.filters.date.defaultFormats.date;
         var jan1    =   new Date(date.getFullYear(), 0, 1);
         
@@ -292,18 +282,22 @@ if(!window['django']) {
             return ret[0];
         }
         return ret.join('');
-	}
-	
-	django.filters.time =   function(date, format) {
-	    return django.filters.date(date, format || django.filters.date.defaultFormats.time);
-	}
-	
-	django.filters.date.defaultFormats  =   {
-	    'date':     'N j, Y',
-	    'time':     'P'
-	}
-	
-	django.filters.date.months  =   {
+    }
+    
+    django.filters.time =   function(date, format) {
+        return django.filters.date(date, format || django.filters.date.defaultFormats.time);
+    }
+    
+    django.filters.date.defaultFormats  =   {
+        'date':     'N j, Y',
+        'time':     'P'
+    }
+    
+    django.filters.ordinal.suffixes = {
+        'en-us': ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
+    };
+    
+    django.filters.date.months  =   {
         'en-us': {
 	        'long': [
 	            'January',
@@ -388,9 +382,13 @@ if(!window['django']) {
         }
     };
 
-    var translatable    =   ['months', 'meridians', 'days'];
+    var translatable    =   ['months', 'meridians', 'days', 'suffixes'];
     for (var i = translatable.length - 1; i >= 0; i--) {
-        var group    =   django.filters.date[translatable[i]];
+        if(translatable[i] == 'suffixes') {
+            var group   =   django.filters.ordinal[translatable[i]];
+        } else {
+            var group    =   django.filters.date[translatable[i]];
+        }
         if(group['en-us']) {
             group['en']  =   group['en-us'];
         }
