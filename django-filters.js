@@ -1,13 +1,12 @@
 if(!window['django']) {
-	window['django'] = {};
-	var django = window['django'];
-}
-
-if(!django.filters) {
-    django.filters  =   {};
+    window['django'] = {};
+    var django = window['django'];
 }
 
 (function(){
+    if(!django.filters) {
+        django.filters  =   {};
+    }
     
     django.filters.utils   =   {
         // borrowed from jQuery
