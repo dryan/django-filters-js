@@ -409,4 +409,105 @@ if(!window['django']) {
         }
     };
     delete(translatable);
+    
+    /*
+        Now make these into a chainable object
+    */
+    
+    // http://michaux.ca/articles/class-based-inheritance-in-javascript
+    function extend(subclass, superclass) {
+        function Dummy(){};
+        Dummy.prototype                 =   superclass.prototype;
+        subclass.prototype              =   new Dummy();
+        subclass.prototype.constructor  =   subclass;
+        subclass.superclass             =   superclass;
+        subclass.superproto             =   superclass.prototype;
+    }
+    
+    function djangoFilterString(value) {
+        this.value  =   value;
+    }
+    
+    extend(djangoFilterString, String);
+    
+    djangoFilterString.prototype.toString = function() {
+        return this.value;
+    };
+
+    djangoFilterString.prototype.valueOf = function() {
+        return this.value;
+    };
+
+    djangoFilterString.prototype.apnumber = function() {
+        this.value  =   django.filters.apnumber(this.value);
+        return this;
+    };
+
+    djangoFilterString.prototype.apnumber_reverse = function() {
+        this.value  =   django.filters.apnumber_reverse(this.value);
+        return this;
+    };
+
+    djangoFilterString.prototype.cut = function(toCut) {
+        this.value  =   django.filters.cut(this.value, toCut);
+        return this;
+    };
+
+    djangoFilterString.prototype.date = function(format) {
+        var date    =   django.filters.utils.parseDate(this.value);
+        if(date.toString() != this.value) {
+            this.value  =   django.filters.date(date, format);
+        }
+        return this;
+    };
+
+    djangoFilterString.prototype.intcomma = function(toCut) {
+        this.value  =   django.filters.intcomma(this.value, toCut);
+        return this;
+    };
+
+    djangoFilterString.prototype.intcomma = function() {
+        this.value  =   django.filters.intcomma(this.value);
+        return this;
+    };
+
+    djangoFilterString.prototype.ordinal = function() {
+        this.value  =   django.filters.ordinal(this.value);
+        return this;
+    };
+
+    djangoFilterString.prototype.slugify = function() {
+        this.value  =   django.filters.slugify(this.value);
+        return this;
+    };
+
+    djangoFilterString.prototype.time = function(format) {
+        var date    =   django.filters.utils.parseDate(this.value);
+        if(date.toString() != this.value) {
+            this.value  =   django.filters.time(date, format);
+        }
+        return this;
+    };
+
+    djangoFilterString.prototype.trim = function() {
+        this.value  =   django.filters.utils.trim(this.value);
+        return this;
+    };
+    
+    django.filter   =   function(text) {
+        this.dfs    =   new djangoFilterString(text);
+        return this.dfs;
+    }
+    
+    django.filter.toString  =   function() {
+        return this.dfs.toString();
+    }
+
+    django.filter.toSource  =   function() {
+        return this.dfs.toSource();
+    }
+    
+    django.filter.valueOf   =   function() {
+        return this.dfs.valueOf();
+    }
 })();
