@@ -48,6 +48,13 @@ if(!window['django']) {
                             }
                             obj =   obj.substr(0, len);
                             return obj;
+                        },
+        'parseDate':    function(string) {
+                            var date    =   new Date(string.replace(/-/g, '/'));
+                            if(date.toString().toLowerCase() == 'invalid date') {
+                                return string;
+                            }
+                            return date;
                         }
         
     }
