@@ -288,6 +288,11 @@ if(!window['django']) {
         return django.filters.date(date, format || django.filters.date.defaultFormats.time);
     }
     
+    django.filters.cut  =   function(str, toCut) {
+        var regex   =   new RegExp(toCut, 'g');
+        return String(str).replace(regex, '');
+    }
+    
     django.filters.date.defaultFormats  =   {
         'date':     'N j, Y',
         'time':     'P'
