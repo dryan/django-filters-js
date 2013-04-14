@@ -52,7 +52,7 @@ if(!window.django) {
                             return obj;
                         },
         'parseDate':    function(string) {
-                            var date    =   new Date(string.replace(/-/g, '/'));
+                            var date    =   new Date(string.replace(/-/g, '/').replace(/T/g, ' '));
                             if(date.toString().toLowerCase() === 'invalid date') {
                                 return string;
                             }
