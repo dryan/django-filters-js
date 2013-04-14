@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Django-filters-js : A project to convert the default and contrib.humanize template filters from Django to JavaScript" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Django-filters-js</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/dryan/django-filters-js">View on GitHub</a>
+
+          <h1 id="project_title">Django-filters-js</h1>
+          <h2 id="project_tagline">A project to convert the default and contrib.humanize template filters from Django to JavaScript</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/dryan/django-filters-js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/dryan/django-filters-js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>Usage</h2>
+
+<p>Add <code>&lt;script src="django-filters.min.js"&gt;&lt;/script&gt;</code> to your page. There are no dependencies.</p>
+
+<h2>Chainable Strings</h2>
+
+<p><code>django.filter</code> implements a chainable object similar to jQuery. This allows for multiple methods to be run in sequence. For example:</p>
+
+<pre><code>var myString    =   django.filter("This is a test sentence").slugify().cut('-'); // becomes "thisisatestsentence"
+// or
+var myString2   =   django.filter(200000);
+myString2.apnumber().intcomma(); // becomes 200,000
+</code></pre>
+
+<h2>Methods</h2>
+
+<p><em>In addition to the chainable pattern, you can call each method directly at <code>django.filters.[methodName]</code> with the string, number or date to filter as the first argument.</em></p>
+
+<pre><code>django.filters.slugify("This is a test sentence"); // becomes "this-is-a-test-sentence"
+django.filters.slugify("This is a test sentence").cut('-'); // raises a TypeError
+</code></pre>
+
+<p><a></a></p>
+
+<h3><a href="#intcomma">.intcomma()</a></h3>
+
+<p>Adds comma separators to a number or string representation of a number.</p>
+
+<ul>
+<li>
+<code>1000000</code> becomes <code>1,000,000</code>
+</li>
+<li>
+<code>1000</code> becomes <code>1,000</code>
+</li>
+<li>
+<code>100</code> becomes <code>100</code>
+</li>
+</ul><p><a></a></p>
+
+<h3><a href="#apnumber">.apnumber()</a></h3>
+
+<p>For integers 0-9, returns the word. For integers 10+, returns the integer.</p>
+
+<ul>
+<li>
+<code>1</code> becomes <code>one</code>
+</li>
+<li>
+<code>10</code> becomes <code>10</code>
+</li>
+</ul><p><a></a></p>
+
+<h3><a href="#slugify">.slugify()</a></h3>
+
+<p>Returns a URI safe version of the string, lowercased with all non-standard characters replaced with '-'.</p>
+
+<p><a></a></p>
+
+<h3><a href="#ordinal">.ordinal()</a></h3>
+
+<p>Appends the ordinal suffix to a number or string representation of a number</p>
+
+<ul>
+<li>
+<code>1</code> becomes <code>1st</code>
+</li>
+<li>
+<code>33</code> becomes <code>33rd</code>
+</li>
+</ul><p><a></a></p>
+
+<h3><a href="#date">.date(format)</a></h3>
+
+<p>Formats a Date object according to the <code>format</code> parameter (a string). Use <code>%</code> to escape characters; use <code>%%</code>to print a literal <code>%</code>. For formatting options, see <a href="https://docs.djangoproject.com/en/1.5/ref/templates/builtins/#date">Django's date documentation</a>.</p>
+
+<p><a></a></p>
+
+<h3><a href="#time">.time(format)</a></h3>
+
+<p>An alias of <code>.date()</code>. Unlike the Django implementation, <code>.time()</code> works with Date objects since there isn't a time-only equivalent in JavaScript.</p>
+
+<p><a></a></p>
+
+<h3><a href="#cut">.cut(toCut)</a></h3>
+
+<p>Removes all instances of the <code>toCut</code> parameter from the string.</p>
+
+<p><a></a></p>
+
+<h3><a href="#trim">.trim()</a></h3>
+
+<p>Removes whitespace from the beginning and end of the string. <em>Only available on instances of <code>django.filter()</code>. To use on plain strings, see <a href="#utils-trim"><code>django.filters.utils.trim</code></a> below.</em></p>
+
+<h2>Utility Methods</h2>
+
+<p>There are five methods primarily intended for internal use by the filter methods, but may be of use on their on as well.</p>
+
+<p><a></a></p>
+
+<h3><a href="#utils-trim">django.filters.utils.trim(text)</a></h3>
+
+<p>Removes whitespace from the beginning and end of the string.</p>
+
+<p><a></a></p>
+
+<h3><a href="#utils-inarray">django.filters.utils.inArray(element, array)</a></h3>
+
+<p>Returns the position of <code>element</code> in <code>array</code>. Returns <code>-1</code> if <code>element</code> is not found.</p>
+
+<p><a></a></p>
+
+<h3><a href="#utils-l_pad">django.filters.utils.l_pad(object, length, pad)</a></h3>
+
+<p>Ensures that the string representation of <code>object</code> is at least as long as <code>length</code>. If <code>object</code> is shorter, <code>pad</code> is added to the beginning of <code>object</code> until is reaches <code>length</code>.</p>
+
+<p><a></a></p>
+
+<h3><a href="#utils-r_pad">django.filters.utils.r_pad(object, length, pad)</a></h3>
+
+<p>Ensures that the string representation of <code>object</code> is at least as long as <code>length</code>. If <code>object</code> is shorter, <code>pad</code> is added to the end of <code>object</code> until is reaches <code>length</code>.</p>
+
+<p><a></a></p>
+
+<h3><a href="#utils-parsedate">django.filters.utils.parseDate(dateString)</a></h3>
+
+<p>Turns a string representation of a date and turns it into a <code>Date</code> object. If the <code>dateString</code> cannot be parsed, returns the original string.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Django-filters-js maintained by <a href="https://github.com/dryan">dryan</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-3625251-4");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
