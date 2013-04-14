@@ -466,11 +466,6 @@ if(!window.django) {
         return this;
     };
 
-    DjangoFilterString.prototype.intcomma = function(toCut) {
-        this.value  =   django.filters.intcomma(this.value, toCut);
-        return this;
-    };
-
     DjangoFilterString.prototype.intcomma = function() {
         this.value  =   django.filters.intcomma(this.value);
         return this;
