@@ -65,11 +65,17 @@ if(!window.django) {
 
     django.filters.intcomma = function( number ) {
         var origNumber = number;
-        number = parseInt( String(number).replace(/[^\d]+/g, ''), 10 );
-        if( isNaN(number) ) {
+        number = parseFloat( number );
+        if( isNaN( number ) ) {
             return origNumber;
         }
         var numString = String( number );
+        var decimal = null;
+        if ( numString.indexOf('.') > -1 ) {
+            numString = numString.split('.', 2);
+            decimal = numString[1];
+            numString = numString[0];
+        }
         number = "";
         var loopCount = 0;
         for (var i = numString.length - 1; i >= 0; i--){
@@ -78,6 +84,9 @@ if(!window.django) {
         }
         if(django.filters.utils.inArray(String(origNumber).substr(String(origNumber).length - 2), django.filters.ordinal.suffixes.current) > -1) {
             return [number, String(origNumber).substr(String(origNumber).length - 2)].join('');
+        }
+        if( decimal ) {
+            number = [number, decimal].join('.');
         }
         return number;
     };
