@@ -1,7 +1,4 @@
-if(!window.django) {
-    window.django = {};
-    var django = window.django;
-}
+var django = window.django || (window.django = {});
 
 (function(){
     "use strict";
