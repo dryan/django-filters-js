@@ -242,12 +242,12 @@ var answers = [
   },
 ];
 
-module("django.filters.date");
+module("djangoFilters.date");
 test(formats["a"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "a"), answer["a"], date.toString());
+    equal(djangoFilters.date(date, "a"), answer["a"], date.toString());
   }
 });
 
@@ -255,7 +255,7 @@ test(formats["A"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "A"), answer["A"], date.toString());
+    equal(djangoFilters.date(date, "A"), answer["A"], date.toString());
   }
 });
 
@@ -263,7 +263,7 @@ test(formats["b"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "b"), answer["b"], date.toString());
+    equal(djangoFilters.date(date, "b"), answer["b"], date.toString());
   }
 });
 
@@ -271,7 +271,7 @@ test(formats["c"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "c"), answer["c"], date.toString());
+    equal(djangoFilters.date(date, "c"), answer["c"], date.toString());
   }
 });
 
@@ -279,7 +279,7 @@ test(formats["d"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "d"), answer["d"], date.toString());
+    equal(djangoFilters.date(date, "d"), answer["d"], date.toString());
   }
 });
 
@@ -287,7 +287,7 @@ test(formats["D"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "D"), answer["D"], date.toString());
+    equal(djangoFilters.date(date, "D"), answer["D"], date.toString());
   }
 });
 
@@ -295,7 +295,7 @@ test(formats["E"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "E"), answer["E"], date.toString());
+    equal(djangoFilters.date(date, "E"), answer["E"], date.toString());
   }
 });
 
@@ -303,7 +303,7 @@ test(formats["f"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "f"), answer["f"], date.toString());
+    equal(djangoFilters.date(date, "f"), answer["f"], date.toString());
   }
 });
 
@@ -311,7 +311,7 @@ test(formats["F"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "F"), answer["F"], date.toString());
+    equal(djangoFilters.date(date, "F"), answer["F"], date.toString());
   }
 });
 
@@ -319,7 +319,7 @@ test(formats["g"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "g"), answer["g"], date.toString());
+    equal(djangoFilters.date(date, "g"), answer["g"], date.toString());
   }
 });
 
@@ -327,7 +327,7 @@ test(formats["G"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "G"), answer["G"], date.toString());
+    equal(djangoFilters.date(date, "G"), answer["G"], date.toString());
   }
 });
 
@@ -335,7 +335,7 @@ test(formats["h"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "h"), answer["h"], date.toString());
+    equal(djangoFilters.date(date, "h"), answer["h"], date.toString());
   }
 });
 
@@ -343,7 +343,7 @@ test(formats["H"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "H"), answer["H"], date.toString());
+    equal(djangoFilters.date(date, "H"), answer["H"], date.toString());
   }
 });
 
@@ -351,7 +351,7 @@ test(formats["i"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "i"), answer["i"], date.toString());
+    equal(djangoFilters.date(date, "i"), answer["i"], date.toString());
   }
 });
 
@@ -359,7 +359,7 @@ test(formats["j"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "j"), answer["j"], date.toString());
+    equal(djangoFilters.date(date, "j"), answer["j"], date.toString());
   }
 });
 
@@ -367,7 +367,7 @@ test(formats["l"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "l"), answer["l"], date.toString());
+    equal(djangoFilters.date(date, "l"), answer["l"], date.toString());
   }
 });
 
@@ -375,7 +375,7 @@ test(formats["L"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "L"), answer["L"], date.toString());
+    equal(djangoFilters.date(date, "L"), answer["L"], date.toString());
   }
 });
 
@@ -383,7 +383,7 @@ test(formats["m"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "M"), answer["M"], date.toString());
+    equal(djangoFilters.date(date, "M"), answer["M"], date.toString());
   }
 });
 
@@ -391,7 +391,7 @@ test(formats["M"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "M"), answer["M"], date.toString());
+    equal(djangoFilters.date(date, "M"), answer["M"], date.toString());
   }
 });
 
@@ -399,7 +399,7 @@ test(formats["n"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "n"), answer["n"], date.toString());
+    equal(djangoFilters.date(date, "n"), answer["n"], date.toString());
   }
 });
 
@@ -407,7 +407,7 @@ test(formats["N"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "N"), answer["N"], date.toString());
+    equal(djangoFilters.date(date, "N"), answer["N"], date.toString());
   }
 });
 
@@ -415,7 +415,7 @@ test(formats["O"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "O"), answer["O"], date.toString());
+    equal(djangoFilters.date(date, "O"), answer["O"], date.toString());
   }
 });
 
@@ -423,7 +423,7 @@ test(formats["P"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "P"), answer["P"], date.toString());
+    equal(djangoFilters.date(date, "P"), answer["P"], date.toString());
   }
 });
 
@@ -431,7 +431,7 @@ test(formats["r"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "r"), answer["r"], date.toString());
+    equal(djangoFilters.date(date, "r"), answer["r"], date.toString());
   }
 });
 
@@ -439,7 +439,7 @@ test(formats["s"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "s"), answer["s"], date.toString());
+    equal(djangoFilters.date(date, "s"), answer["s"], date.toString());
   }
 });
 
@@ -447,7 +447,7 @@ test(formats["S"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "S"), answer["S"], date.toString());
+    equal(djangoFilters.date(date, "S"), answer["S"], date.toString());
   }
 });
 
@@ -455,7 +455,7 @@ test(formats["t"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "t"), answer["t"], date.toString());
+    equal(djangoFilters.date(date, "t"), answer["t"], date.toString());
   }
 });
 
@@ -463,7 +463,7 @@ test(formats["T"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "T"), answer["T"], date.toString());
+    equal(djangoFilters.date(date, "T"), answer["T"], date.toString());
   }
 });
 
@@ -471,7 +471,7 @@ test(formats["u"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "u"), answer["u"], date.toString());
+    equal(djangoFilters.date(date, "u"), answer["u"], date.toString());
   }
 });
 
@@ -479,7 +479,7 @@ test(formats["U"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "U"), answer["U"], date.toString());
+    equal(djangoFilters.date(date, "U"), answer["U"], date.toString());
   }
 });
 
@@ -487,7 +487,7 @@ test(formats["w"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "w"), answer["w"], date.toString());
+    equal(djangoFilters.date(date, "w"), answer["w"], date.toString());
   }
 });
 
@@ -495,7 +495,7 @@ test(formats["W"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "W"), answer["W"], date.toString());
+    equal(djangoFilters.date(date, "W"), answer["W"], date.toString());
   }
 });
 
@@ -503,7 +503,7 @@ test(formats["y"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "y"), answer["y"], date.toString());
+    equal(djangoFilters.date(date, "y"), answer["y"], date.toString());
   }
 });
 
@@ -511,7 +511,7 @@ test(formats["Y"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "Y"), answer["Y"], date.toString());
+    equal(djangoFilters.date(date, "Y"), answer["Y"], date.toString());
   }
 });
 
@@ -519,7 +519,7 @@ test(formats["y"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "y"), answer["y"], date.toString());
+    equal(djangoFilters.date(date, "y"), answer["y"], date.toString());
   }
 });
 
@@ -527,7 +527,7 @@ test(formats["z"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "z"), answer["z"], date.toString());
+    equal(djangoFilters.date(date, "z"), answer["z"], date.toString());
   }
 });
 
@@ -535,6 +535,6 @@ test(formats["Z"], dates.length, function () {
   for (var i = dates.length - 1; i >= 0; i--) {
     var date = dates[i];
     var answer = answers[i];
-    equal(django.filters.date(date, "Z"), answer["Z"], date.toString());
+    equal(djangoFilters.date(date, "Z"), answer["Z"], date.toString());
   }
 });

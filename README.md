@@ -8,19 +8,19 @@ Add `<script src="django-filters.min.js"></script>` to your page. There are no d
 
 ## Chainable Strings
 
-`django.filter` implements a chainable object similar to jQuery. This allows for multiple methods to be run in sequence. For example:
+`djangoFilter` implements a chainable object similar to jQuery. This allows for multiple methods to be run in sequence. For example:
 
-    var myString    =   django.filter("This is a test sentence").slugify().cut('-'); // becomes "thisisatestsentence"
+    var myString    =   djangoFilter("This is a test sentence").slugify().cut('-'); // becomes "thisisatestsentence"
     // or
-    var myString2   =   django.filter(200000);
+    var myString2   =   djangoFilter(200000);
     myString2.apnumber().intcomma(); // becomes 200,000
 
 ## Methods
 
-_In addition to the chainable pattern, you can call each method directly at `django.filters.[methodName]` with the string, number or date to filter as the first argument._
+_In addition to the chainable pattern, you can call each method directly at `djangoFilters.[methodName]` with the string, number or date to filter as the first argument._
 
-    django.filters.slugify("This is a test sentence"); // becomes "this-is-a-test-sentence"
-    django.filters.slugify("This is a test sentence").cut('-'); // raises a TypeError
+    djangoFilters.slugify("This is a test sentence"); // becomes "this-is-a-test-sentence"
+    djangoFilters.slugify("This is a test sentence").cut('-'); // raises a TypeError
 
 <a id="intcomma"></a>
 
@@ -78,38 +78,4 @@ Removes all instances of the `toCut` parameter from the string.
 
 ### [.trim()](#trim)
 
-Removes whitespace from the beginning and end of the string. _Only available on instances of `django.filter()`. To use on plain strings, see [`django.filters.utils.trim`](#utils-trim) below._
-
-## Utility Methods
-
-There are five methods primarily intended for internal use by the filter methods, but may be of use on their on as well.
-
-<a id="utils-trim"></a>
-
-### [django.filters.utils.trim(text)](#utils-trim)
-
-Removes whitespace from the beginning and end of the string.
-
-<a id="utils-inarray"></a>
-
-### [django.filters.utils.inArray(element, array)](#utils-inarray)
-
-Returns the position of `element` in `array`. Returns `-1` if `element` is not found.
-
-<a id="utils-l_pad"></a>
-
-### [django.filters.utils.l_pad(object, length, pad)](#utils-l_pad)
-
-Ensures that the string representation of `object` is at least as long as `length`. If `object` is shorter, `pad` is added to the beginning of `object` until is reaches `length`.
-
-<a id="utils-r_pad"></a>
-
-### [django.filters.utils.r_pad(object, length, pad)](#utils-r_pad)
-
-Ensures that the string representation of `object` is at least as long as `length`. If `object` is shorter, `pad` is added to the end of `object` until is reaches `length`.
-
-<a id="utils-parsedate"></a>
-
-### [django.filters.utils.parseDate(dateString)](#utils-parsedate)
-
-Turns a string representation of a date and turns it into a `Date` object. If the `dateString` cannot be parsed, returns the original string.
+Removes whitespace from the beginning and end of the string. _Only available on instances of `djangoFilter()`. To use on plain strings, see [`djangoFilters.utils.trim`](#utils-trim) below._
