@@ -1,7 +1,5 @@
-if (!window.django) {
-  window.django = {};
-  var django = window.django;
-}
+window.django = window.django || {};
+const django = window.django;
 
 (function () {
   "use strict";
@@ -11,36 +9,12 @@ if (!window.django) {
   }
 
   django.filters.utils = {
-    // borrowed from jQuery
-    trim: typeof String.prototype.trim
-      ? function (text) {
-          return text === null ? "" : String.prototype.trim.call(text);
-        }
-      : function (text) {
-          return text === null
-            ? ""
-            : text.toString().replace(/^\s+/, "").replace(/\s+$/, "");
-        },
+    trim: (text) => (text === null ? "" : String.prototype.trim.call(text)),
 
-    // borrowed from jQuery
-    inArray: function (elem, array) {
-      if (Array.prototype.indexOf) {
-        return Array.prototype.indexOf.call(array, elem);
-      }
-
-      for (var i = 0, length = array.length; i < length; i++) {
-        if (array[i] === elem) {
-          return i;
-        }
-      }
-
-      return -1;
-    },
-
-    l_pad: function (obj, len, pad) {
+    l_pad: (obj, len, pad) => {
       obj = obj.toString();
       pad = pad.toString();
-      var padding = "";
+      let padding = "";
       while (padding.length < len) {
         padding = pad + padding;
       }
@@ -48,7 +22,7 @@ if (!window.django) {
       return obj;
     },
 
-    r_pad: function (obj, len, pad) {
+    r_pad: (obj, len, pad) => {
       obj = obj.toString();
       pad = pad.toString();
       while (obj.length < len) {
@@ -58,8 +32,8 @@ if (!window.django) {
       return obj;
     },
 
-    parseDate: function (string) {
-      var date = new Date(string.replace(/-/g, "/").replace(/T/g, " "));
+    parseDate: (string) => {
+      let date = new Date(string.replace(/-/g, "/").replace(/T/g, " "));
       if (date.toString().toLowerCase() === "invalid date") {
         return string;
       }
@@ -67,32 +41,31 @@ if (!window.django) {
     },
   };
 
-  var utils = django.filters.utils;
+  const utils = django.filters.utils;
 
-  django.filters.intcomma = function (number) {
-    var origNumber = number;
+  django.filters.intcomma = (number) => {
+    let origNumber = number.valueOf();
     number = parseFloat(number);
     if (isNaN(number)) {
       return origNumber;
     }
-    var numString = String(number);
-    var decimal = null;
+    let numString = String(number);
+    let decimal = null;
     if (numString.indexOf(".") > -1) {
       numString = numString.split(".", 2);
       decimal = numString[1];
       numString = numString[0];
     }
     number = "";
-    var loopCount = 0;
-    for (var i = numString.length - 1; i >= 0; i--) {
+    let loopCount = 0;
+    for (let i = numString.length - 1; i >= 0; i--) {
       number =
         (loopCount % 3 === 2 && i > 0 ? "," : "") + numString[i] + number;
       loopCount++;
     }
     if (
-      django.filters.utils.inArray(
-        String(origNumber).substr(String(origNumber).length - 2),
-        django.filters.ordinal.suffixes.current
+      django.filters.ordinal.suffixes.current.indexOf(
+        String(origNumber).substr(String(origNumber).length - 2)
       ) > -1
     ) {
       return [
@@ -106,8 +79,8 @@ if (!window.django) {
     return number;
   };
 
-  django.filters.apnumber = function (number) {
-    var origNumber = number;
+  django.filters.apnumber = (number) => {
+    let origNumber = number;
     number = parseInt(String(number).replace(/[^\d]+/g, ""), 10);
     if (isNaN(number)) {
       return origNumber;
@@ -141,11 +114,11 @@ if (!window.django) {
       django.filters.apnumber.numbers["en-us"];
   }
 
-  django.filters.apnumber_reverse = function (number) {
-    var origNumber = number;
+  django.filters.apnumber_reverse = (number) => {
+    let origNumber = number;
     number = utils.trim(number);
     for (
-      var i = django.filters.apnumber.numbers.current.length - 1;
+      let i = django.filters.apnumber.numbers.current.length - 1;
       i >= 0;
       i--
     ) {
@@ -160,7 +133,7 @@ if (!window.django) {
     return number;
   };
 
-  django.filters.slugify = function (str) {
+  django.filters.slugify = (str) => {
     return utils
       .trim(str)
       .replace(/[^a-zA-Z0-9-._~]/g, "-")
@@ -170,19 +143,19 @@ if (!window.django) {
       .replace(/-+/g, "-");
   };
 
-  django.filters.ordinal = function (number) {
-    var num = parseInt(String(number).replace(/[^\d]+/g, ""), 10);
+  django.filters.ordinal = (number) => {
+    let num = parseInt(String(number).replace(/[^\d]+/g, ""), 10);
     if (isNaN(num)) {
       return number;
     }
 
-    if (utils.inArray(num % 100, [11, 12, 13]) > -1) {
+    if ([11, 12, 13].indexOf(num % 100) > -1) {
       return [number, django.filters.ordinal.suffixes.current[0]].join("");
     }
     return [number, django.filters.ordinal.suffixes.current[num % 10]].join("");
   };
 
-  django.filters.date = function (date, format) {
+  django.filters.date = (date, format) => {
     /*
             To escape a character, use '%'; to print a literal '%', use '%%'.
             Otherwise, formatting follows https://docs.djangoproject.com/en/1.3/ref/templates/builtins/#date.
@@ -194,18 +167,18 @@ if (!window.django) {
       return date;
     }
     format = format || django.filters.date.defaultFormats.date;
-    var jan1 = new Date(date.getFullYear(), 0, 1);
+    let jan1 = new Date(date.getFullYear(), 0, 1);
 
-    function normalize12Hours(hours) {
+    let normalize12Hours = (hours) => {
       if (hours > 12) {
         hours = hours - 12;
       } else if (hours === 0) {
         hours = 12;
       }
       return hours;
-    }
+    };
 
-    var formats = {
+    let formats = {
       a:
         date.getHours() < 12
           ? django.filters.date.meridians.current.ap.am
@@ -220,8 +193,8 @@ if (!window.django) {
       E: django.filters.date.months.current.locale
         ? django.filters.date.months.current.locale[date.getMonth()]
         : django.filters.date.months.current.l[date.getMonth()],
-      f: (function (date) {
-        var ret = [normalize12Hours(date.getHours())];
+      f: ((date) => {
+        let ret = [normalize12Hours(date.getHours())];
         if (date.getMinutes() !== 0) {
           ret.push(":");
           ret.push(utils.l_pad(date.getMinutes(), 2, 0));
@@ -241,8 +214,8 @@ if (!window.django) {
       M: django.filters.date.months.current.s[date.getMonth()],
       n: date.getMonth() + 1,
       N: django.filters.date.months.current.ap[date.getMonth()],
-      O: (function (date) {
-        var offsetHours = Math.ceil(date.getTimezoneOffset() / 60),
+      O: ((date) => {
+        let offsetHours = Math.ceil(date.getTimezoneOffset() / 60),
           offsetMinutes = date.getTimezoneOffset() % 60;
         return (
           (offsetHours <= 0 ? "+" : "-") +
@@ -250,14 +223,14 @@ if (!window.django) {
           utils.l_pad(offsetMinutes, 2, 0)
         );
       })(date),
-      P: (function (date) {
+      P: ((date) => {
         if (
           (date.getHours() === 0 || date.getHours() === 12) &&
           date.getMinutes() === 0
         ) {
           return django.filters.date.meridians.current.normal[date.getHours()];
         }
-        var ret = [normalize12Hours(date.getHours())];
+        let ret = [normalize12Hours(date.getHours())];
         if (date.getMinutes() !== 0) {
           ret.push(":");
           ret.push(utils.l_pad(date.getMinutes(), 2, 0));
@@ -273,22 +246,18 @@ if (!window.django) {
       s: utils.l_pad(date.getSeconds(), 2, 0),
       S: django.filters.ordinal(date.getDate()).replace(date.getDate(), ""),
       t: 32 - new Date(date.getYear(), date.getMonth(), 32).getDate(),
-      T: (function (date) {
-        var timeString = date.toTimeString();
-        timeString = timeString.substring(
-          timeString.indexOf("(") + 1,
-          timeString.length - 1
-        );
-        return timeString;
-      })(date),
+      T: ((date) =>
+        date
+          .toLocaleTimeString(navigator.language, { timeZoneName: "short" })
+          .split(" ")[2])(date),
       u: date.getMilliseconds() * 1000,
       U: Math.floor(date.getTime() / 1000),
       w: date.getDay(),
-      W: (function (date) {
+      W: ((date) => {
         // based on http://www.meanfreepath.com/support/getting_iso_week.html
-        var newYearDoW = jan1.getDay();
+        let newYearDoW = jan1.getDay();
         newYearDoW = newYearDoW >= 0 ? newYearDoW : newYearDoW + 7;
-        var dayNum =
+        let dayNum =
             Math.floor(
               (date.getTime() -
                 jan1.getTime() -
@@ -311,8 +280,8 @@ if (!window.django) {
       y: date.getFullYear().toString().substr(2),
       Y: date.getFullYear(),
       z: Math.ceil((date - jan1) / 86400000),
-      Z: (function (date) {
-        var offsetSeconds = date.getTimezoneOffset() * 60 * -1;
+      Z: ((date) => {
+        let offsetSeconds = date.getTimezoneOffset() * 60 * -1;
         return (
           (offsetSeconds < 0 ? "-" : "") +
           utils.r_pad(Math.abs(offsetSeconds), 5, 0)
@@ -321,7 +290,7 @@ if (!window.django) {
     };
     // special cases
     // ISO 8601
-    //                   YYYY            MM              DD              HH              MM              SS              mmmmmm
+    // YYYY, MM, DD, HH, MM, SS, mmmmmm
     formats.c = [
       formats.Y,
       "-",
@@ -338,7 +307,7 @@ if (!window.django) {
       utils.l_pad(formats.u, 6, 0),
     ].join("");
     // RFC 2822
-    //                   Short Day        Date            Short Month     Year            HH              MM              SS              Timezone Offset
+    //Short Day, Date, Short Month, Year, HH, MM, SS, Timezone Offset
     formats.r = [
       formats.D,
       ", ",
@@ -359,10 +328,10 @@ if (!window.django) {
 
     format = format.split("");
     format.reverse();
-    var ret = [],
+    let ret = [],
       lastChar;
-    for (var i = format.length - 1; i >= 0; i--) {
-      var f = format[i];
+    for (let i = format.length - 1; i >= 0; i--) {
+      let f = format[i];
       if (lastChar === "%" || f === "%") {
         if (lastChar === "%") {
           ret.push(f);
@@ -378,15 +347,15 @@ if (!window.django) {
     return ret.join("");
   };
 
-  django.filters.time = function (date, format) {
+  django.filters.time = (date, format) => {
     return django.filters.date(
       date,
       format || django.filters.date.defaultFormats.time
     );
   };
 
-  django.filters.cut = function (str, toCut) {
-    var regex = new RegExp(toCut, "g");
+  django.filters.cut = (str, toCut) => {
+    let regex = new RegExp(toCut, "g");
     return String(str).replace(regex, "");
   };
 
@@ -481,9 +450,9 @@ if (!window.django) {
     },
   };
 
-  var translatable = ["months", "meridians", "days", "suffixes"];
-  for (var i = translatable.length - 1; i >= 0; i--) {
-    var group;
+  let translatable = ["months", "meridians", "days", "suffixes"];
+  for (let i = translatable.length - 1; i >= 0; i--) {
+    let group;
     if (translatable[i] === "suffixes") {
       group = django.filters.ordinal[translatable[i]];
     } else {
@@ -505,95 +474,73 @@ if (!window.django) {
         Now make these into a chainable object
     */
 
-  // http://michaux.ca/articles/class-based-inheritance-in-javascript
-  function extend(subclass, superclass) {
-    function Dummy() {}
-    Dummy.prototype = superclass.prototype;
-    subclass.prototype = new Dummy();
-    subclass.prototype.constructor = subclass;
-    subclass.superclass = superclass;
-    subclass.superproto = superclass.prototype;
+  class DjangoFilterString extends String {
+    constructor(value) {
+      super(value);
+      this.value = value;
+    }
+
+    toString() {
+      return this.value;
+    }
+
+    valueOf() {
+      return this.value;
+    }
+
+    apnumber() {
+      this.value = django.filters.apnumber(this.value);
+      return this;
+    }
+
+    apnumber_reverse() {
+      this.value = django.filters.apnumber_reverse(this.value);
+      return this;
+    }
+
+    cut(toCut) {
+      this.value = django.filters.cut(this.value, toCut);
+      return this;
+    }
+
+    date(format) {
+      let date = django.filters.utils.parseDate(this.value);
+      if (date.toString() !== this.value) {
+        this.value = django.filters.date(date, format);
+      }
+      return this;
+    }
+
+    intcomma() {
+      this.value = django.filters.intcomma(this.value);
+      return this;
+    }
+
+    ordinal() {
+      this.value = django.filters.ordinal(this.value);
+      return this;
+    }
+
+    slugify() {
+      this.value = django.filters.slugify(this.value);
+      return this;
+    }
+
+    time(format) {
+      let date = django.filters.utils.parseDate(this.value);
+      if (date.toString() !== this.value) {
+        this.value = django.filters.time(date, format);
+      }
+      return this;
+    }
+
+    trim() {
+      this.value = django.filters.utils.trim(this.value);
+      return this;
+    }
   }
 
-  function DjangoFilterString(value) {
-    this.value = value;
-  }
-
-  extend(DjangoFilterString, String);
-
-  DjangoFilterString.prototype.toString = function () {
-    return this.value;
-  };
-
-  DjangoFilterString.prototype.valueOf = function () {
-    return this.value;
-  };
-
-  DjangoFilterString.prototype.apnumber = function () {
-    this.value = django.filters.apnumber(this.value);
-    return this;
-  };
-
-  DjangoFilterString.prototype.apnumber_reverse = function () {
-    this.value = django.filters.apnumber_reverse(this.value);
-    return this;
-  };
-
-  DjangoFilterString.prototype.cut = function (toCut) {
-    this.value = django.filters.cut(this.value, toCut);
-    return this;
-  };
-
-  DjangoFilterString.prototype.date = function (format) {
-    var date = django.filters.utils.parseDate(this.value);
-    if (date.toString() !== this.value) {
-      this.value = django.filters.date(date, format);
-    }
-    return this;
-  };
-
-  DjangoFilterString.prototype.intcomma = function () {
-    this.value = django.filters.intcomma(this.value);
-    return this;
-  };
-
-  DjangoFilterString.prototype.ordinal = function () {
-    this.value = django.filters.ordinal(this.value);
-    return this;
-  };
-
-  DjangoFilterString.prototype.slugify = function () {
-    this.value = django.filters.slugify(this.value);
-    return this;
-  };
-
-  DjangoFilterString.prototype.time = function (format) {
-    var date = django.filters.utils.parseDate(this.value);
-    if (date.toString() !== this.value) {
-      this.value = django.filters.time(date, format);
-    }
-    return this;
-  };
-
-  DjangoFilterString.prototype.trim = function () {
-    this.value = django.filters.utils.trim(this.value);
-    return this;
-  };
-
-  django.filter = function (text) {
-    this.dfs = new DjangoFilterString(text);
-    return this.dfs;
-  };
-
-  django.filter.toString = function () {
-    return this.dfs.toString();
-  };
-
-  django.filter.toSource = function () {
-    return this.dfs.toSource();
-  };
-
-  django.filter.valueOf = function () {
-    return this.dfs.valueOf();
+  django.filter = (text) => {
+    return new DjangoFilterString(text);
   };
 })();
