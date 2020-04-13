@@ -11,25 +11,16 @@ const django = window.django;
   django.filters.utils = {
     trim: (text) => (text === null ? "" : String.prototype.trim.call(text)),
 
-    l_pad: (obj, len, pad) => {
+    padStart: (obj, len, pad) => {
       obj = obj.toString();
       pad = pad.toString();
-      let padding = "";
-      while (padding.length < len) {
-        padding = pad + padding;
-      }
-      obj = padding.substr(0, len - obj.length) + obj;
-      return obj;
+      return obj.padStart(len, pad);
     },
 
-    r_pad: (obj, len, pad) => {
+    padEnd: (obj, len, pad) => {
       obj = obj.toString();
       pad = pad.toString();
-      while (obj.length < len) {
-        obj = obj + pad;
-      }
-      obj = obj.substr(0, len);
-      return obj;
+      return obj.padEnd(len, pad);
     },
 
     parseDate: (string) => {
@@ -188,7 +179,7 @@ const django = window.django;
           ? django.filters.date.meridians.current.normal.am
           : django.filters.date.meridians.current.normal.pm,
       b: django.filters.date.months.current.s[date.getMonth()].toLowerCase(),
-      d: utils.l_pad(date.getDate(), 2, 0),
+      d: utils.padStart(date.getDate(), 2, 0),
       D: django.filters.date.days.current.s[date.getDay()],
       E: django.filters.date.months.current.locale
         ? django.filters.date.months.current.locale[date.getMonth()]
@@ -197,20 +188,20 @@ const django = window.django;
         let ret = [normalize12Hours(date.getHours())];
         if (date.getMinutes() !== 0) {
           ret.push(":");
-          ret.push(utils.l_pad(date.getMinutes(), 2, 0));
+          ret.push(utils.padStart(date.getMinutes(), 2, 0));
         }
         return ret.join("");
       })(date),
       F: django.filters.date.months.current.l[date.getMonth()],
       g: normalize12Hours(date.getHours()),
       G: date.getHours(),
-      h: utils.l_pad(normalize12Hours(date.getHours()), 2, 0),
-      H: utils.l_pad(date.getHours(), 2, 0),
-      i: utils.l_pad(date.getMinutes(), 2, 0),
+      h: utils.padStart(normalize12Hours(date.getHours()), 2, 0),
+      H: utils.padStart(date.getHours(), 2, 0),
+      i: utils.padStart(date.getMinutes(), 2, 0),
       j: date.getDate(),
       l: django.filters.date.days.current.l[date.getDay()],
       L: Boolean(new Date(date.getFullYear(), 1, 29).getDate() === 29),
-      m: utils.l_pad(date.getMonth() + 1, 2, 0),
+      m: utils.padStart(date.getMonth() + 1, 2, 0),
       M: django.filters.date.months.current.s[date.getMonth()],
       n: date.getMonth() + 1,
       N: django.filters.date.months.current.ap[date.getMonth()],
@@ -219,8 +210,8 @@ const django = window.django;
           offsetMinutes = date.getTimezoneOffset() % 60;
         return (
           (offsetHours <= 0 ? "+" : "-") +
-          utils.l_pad(offsetHours, 2, 0) +
-          utils.l_pad(offsetMinutes, 2, 0)
+          utils.padStart(offsetHours, 2, 0) +
+          utils.padStart(offsetMinutes, 2, 0)
         );
       })(date),
       P: ((date) => {
@@ -233,7 +224,7 @@ const django = window.django;
         let ret = [normalize12Hours(date.getHours())];
         if (date.getMinutes() !== 0) {
           ret.push(":");
-          ret.push(utils.l_pad(date.getMinutes(), 2, 0));
+          ret.push(utils.padStart(date.getMinutes(), 2, 0));
         }
         ret.push(" ");
         ret.push(
@@ -243,7 +234,7 @@ const django = window.django;
         );
         return ret.join("");
       })(date),
-      s: utils.l_pad(date.getSeconds(), 2, 0),
+      s: utils.padStart(date.getSeconds(), 2, 0),
       S: django.filters.ordinal(date.getDate()).replace(date.getDate(), ""),
       t: 32 - new Date(date.getYear(), date.getMonth(), 32).getDate(),
       T: ((date) =>
@@ -284,7 +275,7 @@ const django = window.django;
         let offsetSeconds = date.getTimezoneOffset() * 60 * -1;
         return (
           (offsetSeconds < 0 ? "-" : "") +
-          utils.r_pad(Math.abs(offsetSeconds), 5, 0)
+          utils.padEnd(Math.abs(offsetSeconds), 5, 0)
         );
       })(date),
     };
@@ -304,7 +295,7 @@ const django = window.django;
       ":",
       formats.s,
       ".",
-      utils.l_pad(formats.u, 6, 0),
+      utils.padStart(formats.u, 6, 0),
     ].join("");
     // RFC 2822
     //Short Day, Date, Short Month, Year, HH, MM, SS, Timezone Offset

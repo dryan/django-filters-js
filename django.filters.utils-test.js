@@ -13,49 +13,49 @@ test("trim", 2, function () {
   );
 });
 
-test("l_pad", 4, function () {
+test("padStart", 4, function () {
   var randomPadding = Math.floor(Math.random() * 1000000);
   equal(
-    django.filters.utils.l_pad(12, 20, 0),
+    django.filters.utils.padStart(12, 20, 0),
     "00000000000000000012",
     "fixed pad length; padded with 0s"
   );
   equal(
-    django.filters.utils.l_pad(12, randomPadding, 0).length,
+    django.filters.utils.padStart(12, randomPadding, 0).length,
     randomPadding,
     "random pad length; padded with 0s; only checks for length"
   );
   equal(
-    django.filters.utils.l_pad(12, 22, "abc"),
+    django.filters.utils.padStart(12, 22, "abc"),
     "abcabcabcabcabcabcab12",
     "fixed pad length; padded with abc"
   );
   equal(
-    django.filters.utils.l_pad(12, randomPadding, "abc").length,
+    django.filters.utils.padStart(12, randomPadding, "abc").length,
     randomPadding,
     "random pad length; padded with abc; only checks for length"
   );
 });
 
-test("r_pad", 4, function () {
+test("padEnd", 4, function () {
   var randomPadding = Math.floor(Math.random() * 1000000);
   equal(
-    django.filters.utils.r_pad(12, 20, 0),
+    django.filters.utils.padEnd(12, 20, 0),
     "12000000000000000000",
     "fixed pad length; padded with 0s"
   );
   equal(
-    django.filters.utils.r_pad(12, randomPadding, 0).length,
+    django.filters.utils.padEnd(12, randomPadding, 0).length,
     randomPadding,
     "random pad length; padded with 0s; only checks for length"
   );
   equal(
-    django.filters.utils.r_pad(12, 22, "abc"),
+    django.filters.utils.padEnd(12, 22, "abc"),
     "12abcabcabcabcabcabcab",
     "fixed pad length; padded with abc"
   );
   equal(
-    django.filters.utils.r_pad(12, randomPadding, "abc").length,
+    django.filters.utils.padEnd(12, randomPadding, "abc").length,
     randomPadding,
     "random pad length; padded with abc; only checks for length"
   );
