@@ -24,8 +24,14 @@ const django = window.django;
     },
 
     parseDate: (string) => {
+      if (string instanceof Date) {
+        return string;
+      }
       let date = new Date(string.replace(/-/g, "/").replace(/T/g, " "));
       if (date.toString().toLowerCase() === "invalid date") {
+        console && console.warn
+          ? console.warn(`${string} was not parsed as a Date`)
+          : null;
         return string;
       }
       return date;
