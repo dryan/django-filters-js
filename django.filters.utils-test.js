@@ -1,18 +1,5 @@
 module("djangoFilters.utils");
 
-test("trim", 2, function () {
-  equal(
-    djangoFilters.utils.trim("      abd ejf js12 jd\t fjsks\t   "),
-    "abd ejf js12 jd\t fjsks",
-    "with tab and spaces"
-  );
-  equal(
-    djangoFilters.utils.trim("\n\rabcd\n\n    efg hijk\n\r\n"),
-    "abcd\n\n    efg hijk",
-    "with new lines"
-  );
-});
-
 test("padStart", 4, function () {
   var randomPadding = Math.floor(Math.random() * 1000000);
   equal(
