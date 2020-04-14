@@ -37,7 +37,7 @@ djangoFilters.addslashes = (value) =>
 
 djangoFilters.apnumber = (number) => {
   const origNumber = number;
-  number = parseInt(String(number).replace(/[^\d]+/g, ""), 10);
+  number = parseInt(number.toString().replace(/[^\d]+/g, ""), 10);
   if (isNaN(number)) {
     return origNumber;
   }
@@ -51,7 +51,7 @@ djangoFilters.capfirst = (value) => {
 
 djangoFilters.cut = (value, toCut) => {
   const regex = new RegExp(toCut, "g");
-  return String(value).replace(regex, "");
+  return value.toString().replace(regex, "");
 };
 
 djangoFilters.date = (date, format) => {
@@ -241,7 +241,10 @@ djangoFilters.intcomma = (number) => {
 };
 
 djangoFilters.ordinal = (number) => {
-  const num = parseInt(String(number).replace(/[^\d]+/g, ""), 10).toPrecision();
+  const num = parseInt(
+    number.toString().replace(/[^\d]+/g, ""),
+    10
+  ).toPrecision();
   if (isNaN(num) || num >= Number.MAX_SAFE_INTEGER) {
     return number;
   }
@@ -253,6 +256,7 @@ djangoFilters.ordinal = (number) => {
 };
 
 djangoFilters.slugify = (value, allowUnicode) => {
+  value = value.toString();
   if (allowUnicode) {
     value = value.normalize("NFKC");
   } else {
@@ -271,12 +275,8 @@ djangoFilters.slugify = (value, allowUnicode) => {
     .replace(/^-|-$/gu, "");
 };
 
-djangoFilters.time = (date, format) => {
-  return djangoFilters.date(
-    date,
-    format || djangoFilters.date.defaultFormats.time
-  );
-};
+djangoFilters.time = (date, format) =>
+  djangoFilters.date(date, format || djangoFilters.date.defaultFormats.time);
 
 // translatables
 
