@@ -13,16 +13,16 @@ djangoFilters._utils = {
     return obj.padEnd(len, pad);
   },
 
-  parseDate: (string) => {
-    if (string instanceof Date) {
-      return string;
+  parseDate: (value) => {
+    if (value instanceof Date) {
+      return value;
     }
-    const date = new Date(string.replace(/-/g, "/").replace(/T/g, " "));
+    const date = new Date(value.replace(/-/g, "/").replace(/T/g, " "));
     if (date.toString().toLowerCase() === "invalid date") {
       if (console && console.warn) {
-        console.warn(`${string} was not parsed as a Date`);
+        console.warn(`${value} was not parsed as a Date`);
       }
-      return string;
+      return value;
     }
     return date;
   },
@@ -49,9 +49,9 @@ djangoFilters.capfirst = (value) => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
-djangoFilters.cut = (str, toCut) => {
+djangoFilters.cut = (value, toCut) => {
   const regex = new RegExp(toCut, "g");
-  return String(str).replace(regex, "");
+  return String(value).replace(regex, "");
 };
 
 djangoFilters.date = (date, format) => {
@@ -252,13 +252,13 @@ djangoFilters.ordinal = (number) => {
   return [number, djangoFilters.ordinal.suffixes.current[num % 10]].join("");
 };
 
-djangoFilters.slugify = (str, allowUnicode) => {
+djangoFilters.slugify = (value, allowUnicode) => {
   if (allowUnicode) {
-    str = str.normalize("NFKC");
+    value = value.normalize("NFKC");
   } else {
-    str = str.normalize("NFKD").replace(/[^\u0020-\u007F]/g, "");
+    value = value.normalize("NFKD").replace(/[^\u0020-\u007F]/g, "");
   }
-  return str
+  return value
     .trim()
     .toLowerCase()
     .replace(
