@@ -27,6 +27,10 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter("django").capfirst().toString()).toBe("Django");
   });
 
+  test("center", () => {
+    expect(djangoFilter("django").center(8).toString()).toBe(" django ");
+  });
+
   test("cut", () => {
     expect(djangoFilter("this is a string").cut("is").toString()).toBe(
       "th  a string"

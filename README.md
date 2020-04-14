@@ -40,6 +40,14 @@ Capitalizes the first character of the value. If the first character is not a le
 
 - `"django"` becomes `"Django"`
 
+<a id="center"></a>
+
+### [.center(length)](#center)
+
+Centers the value in a field of a given width.
+
+- `"django".center(15)` becomes `"     django    "`
+
 <a id="date"></a>
 
 ### [.date(format)](#date)
