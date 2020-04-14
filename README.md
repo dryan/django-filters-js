@@ -32,6 +32,14 @@ Adds slashes before quotes. Useful for escaping strings in CSV, for example.
 
 - `"I'm using Django"` becomes `"I\'m using Django"`
 
+<a id="capfirst"></a>
+
+### [.capfirst()](#capfirst)
+
+Capitalizes the first character of the value. If the first character is not a letter, this filter has no effect.
+
+- `"django"` becomes `"Django"`
+
 <a id="date"></a>
 
 ### [.date(format)](#date)

@@ -44,7 +44,10 @@ djangoFilters.apnumber = (number) => {
   return djangoFilters.apnumber.numbers.current[number] || String(number);
 };
 
-djangoFilters.capfirst = (value) => value.toString();
+djangoFilters.capfirst = (value) => {
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+};
 
 djangoFilters.cut = (str, toCut) => {
   const regex = new RegExp(toCut, "g");
@@ -449,6 +452,11 @@ class DjangoFilterString extends String {
 
   addslashes() {
     this.value = djangoFilters.addslashes(this.value);
+    return this;
+  }
+
+  capfirst() {
+    this.value = djangoFilters.capfirst(this.value);
     return this;
   }
 

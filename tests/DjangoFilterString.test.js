@@ -23,6 +23,10 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter("1").apnumber().toString()).toBe("one");
   });
 
+  test("capfirst", () => {
+    expect(djangoFilter("django").capfirst().toString()).toBe("Django");
+  });
+
   test("cut", () => {
     expect(djangoFilter("this is a string").cut("is").toString()).toBe(
       "th  a string"
