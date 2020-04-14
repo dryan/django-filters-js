@@ -288,6 +288,13 @@ djangoFilters.cut = (str, toCut) => {
   return String(str).replace(regex, "");
 };
 
+djangoFilters.addslashes = (value) =>
+  value
+    .toString()
+    .replace(/\\/g, String.raw`\\`)
+    .replace(/"/g, '\\"')
+    .replace(/'/g, "\\'");
+
 djangoFilters.date.defaultFormats = {
   date: "N j, Y",
   time: "P",
