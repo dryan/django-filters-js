@@ -47,7 +47,7 @@ djangoFilters.apnumber = (number) => {
   return djangoFilters.apnumber.numbers.current[number] || String(number);
 };
 
-djangoFilters.apnumber.numbers = {
+djangoFilters.apnumber.numbers = djangoFilters.apnumber.numbers || {
   "en-us": [
     "zero",
     "one",
@@ -61,7 +61,6 @@ djangoFilters.apnumber.numbers = {
     "nine",
   ],
 };
-djangoFilters.apnumber.numbers.en = djangoFilters.apnumber.numbers["en-us"];
 if (
   navigator &&
   navigator.language &&
@@ -294,7 +293,7 @@ djangoFilters.date.defaultFormats = {
   time: "P",
 };
 
-djangoFilters.ordinal.suffixes = {
+djangoFilters.ordinal.suffixes = djangoFilters.ordinal.suffixes || {
   "en-us": {
     0: "th",
     1: "st",
@@ -310,7 +309,7 @@ djangoFilters.ordinal.suffixes = {
   },
 };
 
-djangoFilters.date.months = {
+djangoFilters.date.months = djangoFilters.date.months || {
   "en-us": {
     // long
     l: [
@@ -360,7 +359,7 @@ djangoFilters.date.months = {
   },
 };
 
-djangoFilters.date.days = {
+djangoFilters.date.days = djangoFilters.date.days || {
   "en-us": {
     // long
     l: [
@@ -377,7 +376,7 @@ djangoFilters.date.days = {
   },
 };
 
-djangoFilters.date.meridians = {
+djangoFilters.date.meridians = djangoFilters.date.meridians || {
   "en-us": {
     ap: {
       am: "a.m.",
@@ -417,8 +416,8 @@ for (let i = translatable.length - 1; i >= 0; i--) {
 }
 
 /*
-    Now make these into a chainable object
-  */
+  Now make these into a chainable object
+*/
 
 class DjangoFilterString extends String {
   constructor(value) {
