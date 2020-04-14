@@ -280,20 +280,23 @@ djangoFilters.time = (date, format) => {
 
 // translatables
 
-djangoFilters.apnumber.numbers = djangoFilters.apnumber.numbers || {
-  "en-us": [
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ],
-};
+djangoFilters.apnumber.numbers = Object.assign(
+  {
+    "en-us": [
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+    ],
+  },
+  djangoFilters.apnumber.numbers || {}
+);
 if (
   navigator &&
   navigator.language &&
@@ -306,103 +309,115 @@ if (
     djangoFilters.apnumber.numbers["en-us"];
 }
 
-djangoFilters.ordinal.suffixes = djangoFilters.ordinal.suffixes || {
-  "en-us": {
-    0: "th",
-    1: "st",
-    2: "nd",
-    3: "rd",
-    4: "th",
-    5: "th",
-    6: "th",
-    7: "th",
-    8: "th",
-    9: "th",
-    "11-13": "th",
-  },
-};
-
-djangoFilters.date.months = djangoFilters.date.months || {
-  "en-us": {
-    // long
-    l: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
-    // short
-    s: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    // A.P. style
-    ap: [
-      "Jan.",
-      "Feb.",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "Aug.",
-      "Sept.",
-      "Oct.",
-      "Nov.",
-      "Dec.",
-    ],
-  },
-};
-
-djangoFilters.date.days = djangoFilters.date.days || {
-  "en-us": {
-    // long
-    l: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ],
-    // short
-    s: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-  },
-};
-
-djangoFilters.date.meridians = djangoFilters.date.meridians || {
-  "en-us": {
-    ap: {
-      am: "a.m.",
-      pm: "p.m.",
-    },
-    normal: {
-      am: "AM",
-      pm: "PM",
-      0: "midnight",
-      12: "noon",
+djangoFilters.ordinal.suffixes = Object.assign(
+  {
+    "en-us": {
+      0: "th",
+      1: "st",
+      2: "nd",
+      3: "rd",
+      4: "th",
+      5: "th",
+      6: "th",
+      7: "th",
+      8: "th",
+      9: "th",
+      "11-13": "th",
     },
   },
-};
+  djangoFilters.ordinal.suffixes || {}
+);
+
+djangoFilters.date.months = Object.assign(
+  {
+    "en-us": {
+      // long
+      l: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      // short
+      s: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      // A.P. style
+      ap: [
+        "Jan.",
+        "Feb.",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug.",
+        "Sept.",
+        "Oct.",
+        "Nov.",
+        "Dec.",
+      ],
+    },
+  },
+  djangoFilters.date.months || {}
+);
+
+djangoFilters.date.days = Object.assign(
+  {
+    "en-us": {
+      // long
+      l: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      // short
+      s: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    },
+  },
+  djangoFilters.date.days || {}
+);
+
+djangoFilters.date.meridians = Object.assign(
+  {
+    "en-us": {
+      ap: {
+        am: "a.m.",
+        pm: "p.m.",
+      },
+      normal: {
+        am: "AM",
+        pm: "PM",
+        0: "midnight",
+        12: "noon",
+      },
+    },
+  },
+  djangoFilters.date.meridians || {}
+);
 
 const translatable = ["months", "meridians", "days", "suffixes"];
 for (let i = translatable.length - 1; i >= 0; i--) {
