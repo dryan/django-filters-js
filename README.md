@@ -54,6 +54,24 @@ Centers the value in a field of a given width.
 
 Formats a Date object according to the `format` parameter (a string). For formatting options, see [Django's date documentation](https://docs.djangoproject.com/en/latest/ref/templates/builtins/#date).
 
+<a id="escape"></a>
+
+### [.escape()](#escape)
+
+Escapes a string’s HTML. Specifically, it makes these replacements:
+
+- < is converted to &lt;
+- > is converted to &gt;
+- ' (single quote) is converted to &#x27;
+- " (double quote) is converted to &quot;
+- & is converted to &amp;
+
+<a id="escapejs"></a>
+
+### [.escapejs()](#escapejs)
+
+Escapes characters for use in JavaScript strings. This does not make the string safe for use in HTML or JavaScript template literals, but does protect you from syntax errors when using templates to generate JavaScript/JSON.
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)
