@@ -78,6 +78,11 @@ Escapes characters for use in JavaScript strings. This does not make the string 
 
 Formats the value like a ‘human-readable’ file size (i.e. `13 KB`, `4.1 MB`, `102 bytes`, etc.).
 
+<a id="floatformat"></a>
+
+### [.floatformat(precision)](#floatformat)
+
+When used without an argument, rounds a floating-point number to one decimal place – but only if there’s a decimal part to be displayed. Default precision is -1. See https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#floatformat for more details.
 
 <a id="slugify"></a>
 

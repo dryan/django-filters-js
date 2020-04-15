@@ -71,6 +71,10 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter(0).filesizeformat().toString()).toBe("0\xa0bytes");
   });
 
+  test("floatformat", () => {
+    expect(djangoFilter(7.7).floatformat().toString()).toBe("7.7");
+  });
+
   test("intcomma", () => {
     expect(djangoFilter("1000000").intcomma().toString()).toBe("1,000,000");
   });
