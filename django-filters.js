@@ -27,11 +27,15 @@ djangoFilters._utils = {
     return date;
   },
 
-  translate: (group, id) => {
-    const languageCode = (
+  getLanguageCode: () => {
+    return (
       djangoFilters.language ||
-      (navigator && navigator.language ? navigator.language : "en-us")
-    ).toLowerCase();
+      (navigator && navigator.language ? navigator.language : "en-US")
+    );
+  },
+
+  translate: (group, id) => {
+    const languageCode = djangoFilters._utils.getLanguageCode().toLowerCase();
     let lang;
     if (djangoFilters.translations[languageCode]) {
       lang = djangoFilters.translations[languageCode];
@@ -327,6 +331,74 @@ djangoFilters.escapejs = (value) => {
   return value;
 };
 
+djangoFilters.filesizeformat = (bytes, useL10n) => {
+  if (typeof useL10n === "undefined") {
+    useL10n = true;
+  }
+
+  bytes = parseInt(bytes, 10);
+  if (isNaN(bytes)) {
+    return `0\xa0${djangoFilters._utils.translate("filesizeformat", "bytes")}`;
+  }
+
+  const filesize_number_format = (number) => {
+    if (useL10n) {
+      const formatter = new Intl.NumberFormat(
+        djangoFilters._utils.getLanguageCode(),
+        { minimumFractionDigits: 1 }
+      );
+      return formatter.format(parseFloat(number.toFixed(1)));
+    }
+    return number.toFixed(1);
+  };
+
+  const KB = 1024,
+    MB = 1048576,
+    GB = 1073741824,
+    TB = 1099511627776,
+    PB = 1125899906842624;
+
+  let value = "";
+  const negative = bytes < 0;
+
+  if (negative) {
+    bytes = -bytes;
+  }
+
+  if (bytes < KB) {
+    value = `${bytes} ${djangoFilters._utils.translate(
+      "filesizeformat",
+      bytes === 1 ? "byte" : "bytes"
+    )}`;
+  } else if (bytes < MB) {
+    value = `${filesize_number_format(
+      bytes / KB
+    )} ${djangoFilters._utils.translate("filesizeformat", "KB")}`;
+  } else if (bytes < GB) {
+    value = `${filesize_number_format(
+      bytes / MB
+    )} ${djangoFilters._utils.translate("filesizeformat", "MB")}`;
+  } else if (bytes < TB) {
+    value = `${filesize_number_format(
+      bytes / GB
+    )} ${djangoFilters._utils.translate("filesizeformat", "GB")}`;
+  } else if (bytes < PB) {
+    value = `${filesize_number_format(
+      bytes / TB
+    )} ${djangoFilters._utils.translate("filesizeformat", "TB")}`;
+  } else {
+    value = `${filesize_number_format(
+      bytes / PB
+    )} ${djangoFilters._utils.translate("filesizeformat", "PB")}`;
+  }
+
+  if (negative) {
+    value = `-${value}`;
+  }
+
+  return value.replace(/\s/g, "\xa0");
+};
+
 djangoFilters.intcomma = (number) => {
   number = number.toString().split(".");
   const int = number[0];
@@ -422,6 +494,16 @@ djangoFilters.translations = djangoFilters.translations || {};
     4: "Thu",
     5: "Fri",
     6: "Sat",
+  });
+
+  addTranslation("en-us", "filesizeformat", {
+    byte: "byte",
+    bytes: "bytes",
+    KB: "KB",
+    MB: "MB",
+    GB: "GB",
+    TB: "TB",
+    PB: "PB",
   });
 
   addTranslation("en-us", "meridians", {
@@ -557,6 +639,11 @@ class DjangoFilterString extends String {
 
   escapejs() {
     this.value = djangoFilters.escapejs(this.value);
+    return this;
+  }
+
+  filesizeformat() {
+    this.value = djangoFilters.filesizeformat(this.value);
     return this;
   }
 

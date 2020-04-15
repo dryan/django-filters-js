@@ -72,6 +72,13 @@ Escapes a string’s HTML. Specifically, it makes these replacements:
 
 Escapes characters for use in JavaScript strings. This does not make the string safe for use in HTML or JavaScript template literals, but does protect you from syntax errors when using templates to generate JavaScript/JSON.
 
+<a id="filesizeformat"></a>
+
+### [.filesizeformat()](#filesizeformat)
+
+Formats the value like a ‘human-readable’ file size (i.e. `13 KB`, `4.1 MB`, `102 bytes`, etc.).
+
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)

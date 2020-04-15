@@ -59,12 +59,16 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter("x&y").escape().toString()).toBe("x&amp;y");
   });
 
-  test("quotes", () => {
+  test("escapejs", () => {
     expect(
       djangoFilter("\"double quotes\" and 'single quotes'")
         .escapejs()
         .toString()
     ).toBe("\\u0022double quotes\\u0022 and \\u0027single quotes\\u0027");
+  });
+
+  test("filesizeformat", () => {
+    expect(djangoFilter(0).filesizeformat().toString()).toBe("0\xa0bytes");
   });
 
   test("intcomma", () => {
