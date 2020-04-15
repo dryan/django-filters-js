@@ -26,6 +26,25 @@ djangoFilters._utils = {
     }
     return date;
   },
+
+  translate: (group, id) => {
+    const languageCode = (
+      djangoFilters.language ||
+      (navigator && navigator.language ? navigator.language : "en-us")
+    ).toLowerCase();
+    let lang;
+    if (djangoFilters.translations[languageCode]) {
+      lang = djangoFilters.translations[languageCode];
+    } else if (djangoFilters.translations[languageCode.split("-")[0]]) {
+      lang = djangoFilters.translations[languageCode.split("-")[0]];
+    } else {
+      lang = djangoFilters.translations["en-us"];
+    }
+    if (lang && lang[group]) {
+      return lang[group][id];
+    }
+    return undefined;
+  },
 };
 
 djangoFilters.addslashes = (value) =>
@@ -36,12 +55,9 @@ djangoFilters.addslashes = (value) =>
     .replace(/'/g, "\\'");
 
 djangoFilters.apnumber = (number) => {
-  const origNumber = number;
-  number = parseInt(number.toString().replace(/[^\d]+/g, ""), 10);
-  if (isNaN(number)) {
-    return origNumber;
-  }
-  return djangoFilters.apnumber.numbers.current[number] || String(number);
+  return (
+    djangoFilters._utils.translate("apnumbers", number) || number.toString()
+  );
 };
 
 djangoFilters.capfirst = (value) => {
@@ -88,18 +104,20 @@ djangoFilters.date = (date, format) => {
   const formats = {
     a:
       date.getHours() < 12
-        ? djangoFilters.date.meridians.current.ap.am
-        : djangoFilters.date.meridians.current.ap.pm,
+        ? djangoFilters._utils.translate("meridians:ap", "am")
+        : djangoFilters._utils.translate("meridians:ap", "pm"),
     A:
       date.getHours() < 12
-        ? djangoFilters.date.meridians.current.normal.am
-        : djangoFilters.date.meridians.current.normal.pm,
-    b: djangoFilters.date.months.current.s[date.getMonth()].toLowerCase(),
+        ? djangoFilters._utils.translate("meridians", "am")
+        : djangoFilters._utils.translate("meridians", "pm"),
+    b: djangoFilters._utils
+      .translate("months:short", date.getMonth())
+      .toLowerCase(),
     d: djangoFilters._utils.padStart(date.getDate(), 2, 0),
-    D: djangoFilters.date.days.current.s[date.getDay()],
-    E: djangoFilters.date.months.current.locale
-      ? djangoFilters.date.months.current.locale[date.getMonth()]
-      : djangoFilters.date.months.current.l[date.getMonth()],
+    D: djangoFilters._utils.translate("days:short", date.getDay()),
+    E:
+      djangoFilters._utils.translate("months:locale", date.getMonth()) ||
+      djangoFilters._utils.translate("months:long", date.getMonth()),
     f: ((date) => {
       const ret = [normalize12Hours(date.getHours())];
       if (date.getMinutes() !== 0) {
@@ -108,19 +126,19 @@ djangoFilters.date = (date, format) => {
       }
       return ret.join("");
     })(date),
-    F: djangoFilters.date.months.current.l[date.getMonth()],
+    F: djangoFilters._utils.translate("months:long", date.getMonth()),
     g: normalize12Hours(date.getHours()),
     G: date.getHours(),
     h: djangoFilters._utils.padStart(normalize12Hours(date.getHours()), 2, 0),
     H: djangoFilters._utils.padStart(date.getHours(), 2, 0),
     i: djangoFilters._utils.padStart(date.getMinutes(), 2, 0),
     j: date.getDate(),
-    l: djangoFilters.date.days.current.l[date.getDay()],
+    l: djangoFilters._utils.translate("days:long", date.getDay()),
     L: Boolean(new Date(date.getFullYear(), 1, 29).getDate() === 29),
     m: djangoFilters._utils.padStart(date.getMonth() + 1, 2, 0),
-    M: djangoFilters.date.months.current.s[date.getMonth()],
+    M: djangoFilters._utils.translate("months:short", date.getMonth()),
     n: date.getMonth() + 1,
-    N: djangoFilters.date.months.current.ap[date.getMonth()],
+    N: djangoFilters._utils.translate("months:ap", date.getMonth()),
     O: ((date) => {
       const offsetHours = Math.ceil(date.getTimezoneOffset() / 60),
         offsetMinutes = date.getTimezoneOffset() % 60;
@@ -135,7 +153,7 @@ djangoFilters.date = (date, format) => {
         (date.getHours() === 0 || date.getHours() === 12) &&
         date.getMinutes() === 0
       ) {
-        return djangoFilters.date.meridians.current.normal[date.getHours()];
+        return djangoFilters._utils.translate("meridians", date.getHours());
       }
       const ret = [normalize12Hours(date.getHours())];
       if (date.getMinutes() !== 0) {
@@ -145,8 +163,8 @@ djangoFilters.date = (date, format) => {
       ret.push(" ");
       ret.push(
         date.getHours() < 12
-          ? djangoFilters.date.meridians.current.ap.am
-          : djangoFilters.date.meridians.current.ap.pm
+          ? djangoFilters._utils.translate("meridians:ap", "am")
+          : djangoFilters._utils.translate("meridians:ap", "pm")
       );
       return ret.join("");
     })(date),
@@ -329,9 +347,13 @@ djangoFilters.ordinal = (number) => {
   }
 
   if ([11, 12, 13].indexOf(num % 100) > -1) {
-    return [number, djangoFilters.ordinal.suffixes.current["11-13"]].join("");
+    return [number, djangoFilters._utils.translate("ordinals", "11-13")].join(
+      ""
+    );
   }
-  return [number, djangoFilters.ordinal.suffixes.current[num % 10]].join("");
+  return [number, djangoFilters._utils.translate("ordinals", num % 10)].join(
+    ""
+  );
 };
 
 djangoFilters.slugify = (value, allowUnicode) => {
@@ -357,170 +379,126 @@ djangoFilters.slugify = (value, allowUnicode) => {
 djangoFilters.time = (date, format) =>
   djangoFilters.date(date, format || djangoFilters.date.defaultFormats.time);
 
-// translatables
+// setup up the translations and add the US English variants
+djangoFilters.translations = djangoFilters.translations || {};
+(function () {
+  const addTranslation = (languageCode, group, strings) => {
+    djangoFilters.translations[languageCode] =
+      djangoFilters.translations[languageCode] || {};
+    djangoFilters.translations[languageCode][group] = Object.assign(
+      strings,
+      djangoFilters.translations[languageCode][group] || {}
+    );
+  };
 
-djangoFilters.apnumber.numbers = Object.assign(
-  {
-    "en-us": [
-      "zero",
-      "one",
-      "two",
-      "three",
-      "four",
-      "five",
-      "six",
-      "seven",
-      "eight",
-      "nine",
-    ],
-  },
-  djangoFilters.apnumber.numbers || {}
-);
-if (
-  navigator &&
-  navigator.language &&
-  djangoFilters.apnumber.numbers[navigator.language.toLowerCase()]
-) {
-  djangoFilters.apnumber.numbers.current =
-    djangoFilters.apnumber.numbers[navigator.language.toLowerCase()];
-} else {
-  djangoFilters.apnumber.numbers.current =
-    djangoFilters.apnumber.numbers["en-us"];
-}
+  addTranslation("en-us", "apnumbers", {
+    0: "zero",
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+  });
 
-djangoFilters.ordinal.suffixes = Object.assign(
-  {
-    "en-us": {
-      0: "th",
-      1: "st",
-      2: "nd",
-      3: "rd",
-      4: "th",
-      5: "th",
-      6: "th",
-      7: "th",
-      8: "th",
-      9: "th",
-      "11-13": "th",
-    },
-  },
-  djangoFilters.ordinal.suffixes || {}
-);
+  addTranslation("en-us", "days:long", {
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+  });
 
-djangoFilters.date.months = Object.assign(
-  {
-    "en-us": {
-      // long
-      l: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ],
-      // short
-      s: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      // A.P. style
-      ap: [
-        "Jan.",
-        "Feb.",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "Aug.",
-        "Sept.",
-        "Oct.",
-        "Nov.",
-        "Dec.",
-      ],
-    },
-  },
-  djangoFilters.date.months || {}
-);
+  addTranslation("en-us", "days:short", {
+    0: "Sun",
+    1: "Mon",
+    2: "Tue",
+    3: "Wed",
+    4: "Thu",
+    5: "Fri",
+    6: "Sat",
+  });
 
-djangoFilters.date.days = Object.assign(
-  {
-    "en-us": {
-      // long
-      l: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
-      // short
-      s: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    },
-  },
-  djangoFilters.date.days || {}
-);
+  addTranslation("en-us", "meridians", {
+    am: "AM",
+    pm: "PM",
+    0: "midnight",
+    12: "noon",
+  });
 
-djangoFilters.date.meridians = Object.assign(
-  {
-    "en-us": {
-      ap: {
-        am: "a.m.",
-        pm: "p.m.",
-      },
-      normal: {
-        am: "AM",
-        pm: "PM",
-        0: "midnight",
-        12: "noon",
-      },
-    },
-  },
-  djangoFilters.date.meridians || {}
-);
+  addTranslation("en-us", "meridians:ap", {
+    am: "a.m.",
+    pm: "p.m.",
+  });
 
-const translatable = ["months", "meridians", "days", "suffixes"];
-for (let i = translatable.length - 1; i >= 0; i--) {
-  let group;
-  if (translatable[i] === "suffixes") {
-    group = djangoFilters.ordinal[translatable[i]];
-  } else {
-    group = djangoFilters.date[translatable[i]];
-  }
-  if (group) {
-    if (group["en-us"]) {
-      group.en = group["en-us"];
-    }
-    if (
-      navigator &&
-      navigator.language &&
-      group[navigator.language.toLowerCase()]
-    ) {
-      group.current = group[navigator.language.toLowerCase()];
-    } else {
-      group.current = group["en-us"];
-    }
-  }
-}
+  addTranslation("en-us", "months:long", {
+    0: "January",
+    1: "February",
+    2: "March",
+    3: "April",
+    4: "May",
+    5: "June",
+    6: "July",
+    7: "August",
+    8: "September",
+    9: "October",
+    10: "November",
+    11: "December",
+  });
+
+  addTranslation("en-us", "months:short", {
+    0: "Jan",
+    1: "Feb",
+    2: "Mar",
+    3: "Apr",
+    4: "May",
+    5: "Jun",
+    6: "Jul",
+    7: "Aug",
+    8: "Sep",
+    9: "Oct",
+    10: "Nov",
+    11: "Dec",
+  });
+
+  addTranslation("en-us", "months:ap", {
+    0: "Jan.",
+    1: "Feb.",
+    2: "March",
+    3: "Apr",
+    4: "May",
+    5: "June",
+    6: "July",
+    7: "Aug.",
+    8: "Sept.",
+    9: "Oct.",
+    10: "Nov.",
+    11: "Dec.",
+  });
+
+  addTranslation("en-us", "ordinals", {
+    0: "th",
+    1: "st",
+    2: "nd",
+    3: "rd",
+    4: "th",
+    5: "th",
+    6: "th",
+    7: "th",
+    8: "th",
+    9: "th",
+    "11-13": "th",
+  });
+})();
+
+// set default language fallbacks for when there's no country code
+djangoFilters.translations.en = djangoFilters.translations["en-us"];
+djangoFilters.translations["en-en"] = djangoFilters.translations["en-us"];
 
 /*
   Now make these into a chainable object
@@ -617,7 +595,7 @@ const djangoFilter = (text) => {
   return new DjangoFilterString(text);
 };
 
-if (module && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     djangoFilters,
     djangoFilter,

@@ -67,11 +67,29 @@ describe("_utils.parseDate", () => {
     ).toBe(date.toISOString());
   });
 
-  test("invalide datetime string", () => {
+  test("invalid datetime string", () => {
     const originalWarn = console.warn;
     console.warn = jest.fn();
     expect(djangoFilters._utils.parseDate("monkeybat")).toBe("monkeybat");
     expect(console.warn).toHaveBeenCalled();
     console.warn = originalWarn;
+  });
+});
+
+describe("_utils.translate", () => {
+  beforeAll(() => {
+    djangoFilters.translations["en-us"].testing = {
+      monkeybat: "monkeybat",
+    };
+  });
+
+  test("matched translation", () => {
+    expect(djangoFilters._utils.translate("testing", "monkeybat")).toBe(
+      "monkeybat"
+    );
+  });
+
+  test("unmatched translation in supported language", () => {
+    expect(djangoFilters._utils.translate("testing", "foo")).toBeUndefined();
   });
 });
