@@ -334,7 +334,7 @@ djangoFilters.filesizeformat = (bytes, useL10n) => {
     return `0\xa0${djangoFilters._utils.translate("filesizeformat", "bytes")}`;
   }
 
-  const filesize_number_format = (number) => {
+  const filesizeNumberFormat = (number) => {
     if (useL10n) {
       const formatter = new Intl.NumberFormat(
         djangoFilters._utils.getLanguageCode(),
@@ -364,23 +364,23 @@ djangoFilters.filesizeformat = (bytes, useL10n) => {
       bytes === 1 ? "byte" : "bytes"
     )}`;
   } else if (bytes < MB) {
-    value = `${filesize_number_format(
+    value = `${filesizeNumberFormat(
       bytes / KB
     )} ${djangoFilters._utils.translate("filesizeformat", "KB")}`;
   } else if (bytes < GB) {
-    value = `${filesize_number_format(
+    value = `${filesizeNumberFormat(
       bytes / MB
     )} ${djangoFilters._utils.translate("filesizeformat", "MB")}`;
   } else if (bytes < TB) {
-    value = `${filesize_number_format(
+    value = `${filesizeNumberFormat(
       bytes / GB
     )} ${djangoFilters._utils.translate("filesizeformat", "GB")}`;
   } else if (bytes < PB) {
-    value = `${filesize_number_format(
+    value = `${filesizeNumberFormat(
       bytes / TB
     )} ${djangoFilters._utils.translate("filesizeformat", "TB")}`;
   } else {
-    value = `${filesize_number_format(
+    value = `${filesizeNumberFormat(
       bytes / PB
     )} ${djangoFilters._utils.translate("filesizeformat", "PB")}`;
   }
