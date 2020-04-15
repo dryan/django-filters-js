@@ -58,10 +58,8 @@ djangoFilters.addslashes = (value) =>
     .replace(/"/g, '\\"')
     .replace(/'/g, "\\'");
 
-djangoFilters.apnumber = (number) => {
-  return (
-    djangoFilters._utils.translate("apnumbers", number) || number.toString()
-  );
+djangoFilters.apnumber = (value) => {
+  return djangoFilters._utils.translate("apnumbers", value) || value.toString();
 };
 
 djangoFilters.capfirst = (value) => {
@@ -82,19 +80,19 @@ djangoFilters.cut = (value, toCut) => {
   return value.toString().replace(regex, "");
 };
 
-djangoFilters.date = (date, format) => {
+djangoFilters.date = (value, format) => {
   /*
     To escape a character, use '%'; to print a literal '%', use '%%'.
     Otherwise, formatting follows https://docs.djangoproject.com/en/1.3/ref/templates/builtins/#date.
   */
   if (
-    !date ||
-    (date.toString && date.toString().toLowerCase() === "invalid date")
+    !value ||
+    (value.toString && value.toString().toLowerCase() === "invalid date")
   ) {
-    return date;
+    return value;
   }
   format = format || djangoFilters.date.defaultFormats.date;
-  const jan1 = new Date(date.getFullYear(), 0, 1);
+  const jan1 = new Date(value.getFullYear(), 0, 1);
 
   const normalize12Hours = (hours) => {
     if (hours > 12) {
@@ -107,103 +105,98 @@ djangoFilters.date = (date, format) => {
 
   const formats = {
     a:
-      date.getHours() < 12
+      value.getHours() < 12
         ? djangoFilters._utils.translate("meridians:ap", "am")
         : djangoFilters._utils.translate("meridians:ap", "pm"),
     A:
-      date.getHours() < 12
+      value.getHours() < 12
         ? djangoFilters._utils.translate("meridians", "am")
         : djangoFilters._utils.translate("meridians", "pm"),
     b: djangoFilters._utils
-      .translate("months:short", date.getMonth())
+      .translate("months:short", value.getMonth())
       .toLowerCase(),
-    d: djangoFilters._utils.padStart(date.getDate(), 2, 0),
-    D: djangoFilters._utils.translate("days:short", date.getDay()),
+    d: djangoFilters._utils.padStart(value.getDate(), 2, 0),
+    D: djangoFilters._utils.translate("days:short", value.getDay()),
     E:
-      djangoFilters._utils.translate("months:locale", date.getMonth()) ||
-      djangoFilters._utils.translate("months:long", date.getMonth()),
-    f: ((date) => {
-      const ret = [normalize12Hours(date.getHours())];
-      if (date.getMinutes() !== 0) {
+      djangoFilters._utils.translate("months:locale", value.getMonth()) ||
+      djangoFilters._utils.translate("months:long", value.getMonth()),
+    f: ((v) => {
+      const ret = [normalize12Hours(v.getHours())];
+      if (v.getMinutes() !== 0) {
         ret.push(":");
-        ret.push(djangoFilters._utils.padStart(date.getMinutes(), 2, 0));
+        ret.push(djangoFilters._utils.padStart(v.getMinutes(), 2, 0));
       }
       return ret.join("");
-    })(date),
-    F: djangoFilters._utils.translate("months:long", date.getMonth()),
-    g: normalize12Hours(date.getHours()),
-    G: date.getHours(),
-    h: djangoFilters._utils.padStart(normalize12Hours(date.getHours()), 2, 0),
-    H: djangoFilters._utils.padStart(date.getHours(), 2, 0),
-    i: djangoFilters._utils.padStart(date.getMinutes(), 2, 0),
-    j: date.getDate(),
-    l: djangoFilters._utils.translate("days:long", date.getDay()),
-    L: Boolean(new Date(date.getFullYear(), 1, 29).getDate() === 29),
-    m: djangoFilters._utils.padStart(date.getMonth() + 1, 2, 0),
-    M: djangoFilters._utils.translate("months:short", date.getMonth()),
-    n: date.getMonth() + 1,
-    N: djangoFilters._utils.translate("months:ap", date.getMonth()),
-    O: ((date) => {
-      const offsetHours = Math.ceil(date.getTimezoneOffset() / 60),
-        offsetMinutes = date.getTimezoneOffset() % 60;
+    })(value),
+    F: djangoFilters._utils.translate("months:long", value.getMonth()),
+    g: normalize12Hours(value.getHours()),
+    G: value.getHours(),
+    h: djangoFilters._utils.padStart(normalize12Hours(value.getHours()), 2, 0),
+    H: djangoFilters._utils.padStart(value.getHours(), 2, 0),
+    i: djangoFilters._utils.padStart(value.getMinutes(), 2, 0),
+    j: value.getDate(),
+    l: djangoFilters._utils.translate("days:long", value.getDay()),
+    L: Boolean(new Date(value.getFullYear(), 1, 29).getDate() === 29),
+    m: djangoFilters._utils.padStart(value.getMonth() + 1, 2, 0),
+    M: djangoFilters._utils.translate("months:short", value.getMonth()),
+    n: value.getMonth() + 1,
+    N: djangoFilters._utils.translate("months:ap", value.getMonth()),
+    O: ((v) => {
+      const offsetHours = Math.ceil(v.getTimezoneOffset() / 60),
+        offsetMinutes = v.getTimezoneOffset() % 60;
       return (
         (offsetHours <= 0 ? "+" : "-") +
         djangoFilters._utils.padStart(offsetHours, 2, 0) +
         djangoFilters._utils.padStart(offsetMinutes, 2, 0)
       );
-    })(date),
-    P: ((date) => {
-      if (
-        (date.getHours() === 0 || date.getHours() === 12) &&
-        date.getMinutes() === 0
-      ) {
-        return djangoFilters._utils.translate("meridians", date.getHours());
+    })(value),
+    P: ((v) => {
+      if ((v.getHours() === 0 || v.getHours() === 12) && v.getMinutes() === 0) {
+        return djangoFilters._utils.translate("meridians", v.getHours());
       }
-      const ret = [normalize12Hours(date.getHours())];
-      if (date.getMinutes() !== 0) {
+      const ret = [normalize12Hours(v.getHours())];
+      if (v.getMinutes() !== 0) {
         ret.push(":");
-        ret.push(djangoFilters._utils.padStart(date.getMinutes(), 2, 0));
+        ret.push(djangoFilters._utils.padStart(v.getMinutes(), 2, 0));
       }
       ret.push(" ");
       ret.push(
-        date.getHours() < 12
+        v.getHours() < 12
           ? djangoFilters._utils.translate("meridians:ap", "am")
           : djangoFilters._utils.translate("meridians:ap", "pm")
       );
       return ret.join("");
-    })(date),
-    s: djangoFilters._utils.padStart(date.getSeconds(), 2, 0),
-    S: djangoFilters.ordinal(date.getDate()).replace(date.getDate(), ""),
-    t: 32 - new Date(date.getYear(), date.getMonth(), 32).getDate(),
-    T: ((date) =>
-      date
+    })(value),
+    s: djangoFilters._utils.padStart(value.getSeconds(), 2, 0),
+    S: djangoFilters.ordinal(value.getDate()).replace(value.getDate(), ""),
+    t: 32 - new Date(value.getYear(), value.getMonth(), 32).getDate(),
+    T: ((v) =>
+      v
         .toLocaleTimeString(navigator ? navigator.language : "en-US", {
           timeZoneName: "short",
         })
-        .split(" ")[2])(date),
-    u: date.getMilliseconds() * 1000,
-    U: Math.floor(date.getTime() / 1000),
-    w: date.getDay(),
-    W: ((date) => {
+        .split(" ")[2])(value),
+    u: value.getMilliseconds() * 1000,
+    U: Math.floor(value.getTime() / 1000),
+    w: value.getDay(),
+    W: ((v) => {
       // from https://stackoverflow.com/a/6117889/2918278
-      const d = new Date(
-        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-      );
+      const d = new Date(Date.UTC(v.getFullYear(), v.getMonth(), v.getDate()));
       const dayNum = d.getUTCDay() || 7;
       d.setUTCDate(d.getUTCDate() + 4 - dayNum);
       const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
       return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-    })(date),
-    y: date.getFullYear().toString().substr(2),
-    Y: date.getFullYear(),
-    z: Math.ceil((date - jan1) / 86400000),
-    Z: ((date) => {
-      const offsetSeconds = date.getTimezoneOffset() * 60 * -1;
+    })(value),
+    y: value.getFullYear().toString().substr(2),
+    Y: value.getFullYear(),
+    z: Math.ceil((value - jan1) / 86400000),
+    Z: ((v) => {
+      const offsetSeconds = v.getTimezoneOffset() * 60 * -1;
       return (
         (offsetSeconds < 0 ? "-" : "") +
         djangoFilters._utils.padEnd(Math.abs(offsetSeconds), 5, 0)
       );
-    })(date),
+    })(value),
   };
   // special cases
   // ISO 8601
@@ -399,33 +392,31 @@ djangoFilters.filesizeformat = (bytes, useL10n) => {
   return value.replace(/\s/g, "\xa0");
 };
 
-djangoFilters.intcomma = (number) => {
-  number = number.toString().split(".");
-  const int = number[0];
+djangoFilters.intcomma = (value) => {
+  value = value.toString().split(".");
+  const int = value[0];
   const parts = [int.replace(/\B(?=(\d{3})+(?!\d))/g, ",")];
-  if (number.length > 1) {
-    parts.push(number.slice(1).join("."));
+  if (value.length > 1) {
+    parts.push(value.slice(1).join("."));
   }
   return parts.join(".");
 };
 
-djangoFilters.ordinal = (number) => {
+djangoFilters.ordinal = (value) => {
   const num = parseInt(
-    number.toString().replace(/[^\d]+/g, ""),
+    value.toString().replace(/[^\d]+/g, ""),
     10
   ).toPrecision();
   if (isNaN(num) || num >= Number.MAX_SAFE_INTEGER) {
-    return number;
+    return value;
   }
 
   if ([11, 12, 13].indexOf(num % 100) > -1) {
-    return [number, djangoFilters._utils.translate("ordinals", "11-13")].join(
+    return [value, djangoFilters._utils.translate("ordinals", "11-13")].join(
       ""
     );
   }
-  return [number, djangoFilters._utils.translate("ordinals", num % 10)].join(
-    ""
-  );
+  return [value, djangoFilters._utils.translate("ordinals", num % 10)].join("");
 };
 
 djangoFilters.slugify = (value, allowUnicode) => {
