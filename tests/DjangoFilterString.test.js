@@ -59,6 +59,10 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter("x&y").escape().toString()).toBe("x&amp;y");
   });
 
+  test("escape->escape", () => {
+    expect(djangoFilter("x&y").escape().escape().toString()).toBe("x&amp;y");
+  });
+
   test("escapejs", () => {
     expect(
       djangoFilter("\"double quotes\" and 'single quotes'")
