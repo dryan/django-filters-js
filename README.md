@@ -100,15 +100,19 @@ It’s safe to use this filter on a string that has already gone through the url
 
 <a id="linebreaks"></a>
 
-### [.linebreaks()](#linebreaks)
+### [.linebreaks(autoescape)](#linebreaks)
 
 Replaces line breaks in plain text with appropriate HTML; a single newline becomes an HTML line break (`<br>`) and a new line followed by a blank line becomes a paragraph break (`</p>`)
 
+`autoescape` is true by default. When `autoescape` is true, the content will be passed through `.escape()` before the `<p>` and `<br>` tags are inserted.
+
 <a id="linebreaksbr"></a>
 
-### [.linebreaksbr()](#linebreaksbr)
+### [.linebreaksbr(autoescape)](#linebreaksbr)
 
 Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
+
+`autoescape` is true by default. When `autoescape` is true, the content will be passed through `.escape()` before the `<br>` tags are inserted.
 
 <a id="slugify"></a>
 

@@ -746,13 +746,13 @@ class DjangoFilterString extends String {
     return this;
   }
 
-  linebreaks() {
-    this.value = djangoFilters.linebreaks(this.value);
+  linebreaks(autoescape) {
+    this.value = djangoFilters.linebreaks(this.value, autoescape);
     return this;
   }
 
-  linebreaksbr() {
-    this.value = djangoFilters.linebreaksbr(this.value);
+  linebreaksbr(autoescape) {
+    this.value = djangoFilters.linebreaksbr(this.value, autoescape);
     return this;
   }
 
