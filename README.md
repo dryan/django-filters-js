@@ -90,6 +90,14 @@ When used without an argument, rounds a floating-point number to one decimal pla
 
 This is an alias of `.escape()`. Unlike the Django version, the behavior here is identical to `.escape()`. Calling this multiple times returns the same result each time.
 
+<a id="iriencode"></a>
+
+### [.iriencode(precision)](#iriencode)
+
+Converts an IRI (Internationalized Resource Identifier) to a string that is suitable for including in a URL. This is necessary if you’re trying to use strings containing non-ASCII characters in a URL.
+
+It’s safe to use this filter on a string that has already gone through the urlencode filter.
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)

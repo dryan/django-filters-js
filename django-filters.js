@@ -453,6 +453,12 @@ djangoFilters.intcomma = (value) => {
   return parts.join(".");
 };
 
+djangoFilters.iriencode = (value) => {
+  value = value.toString();
+  // the decode call makes sure we don't double encode this
+  return encodeURIComponent(decodeURIComponent(value));
+};
+
 djangoFilters.ordinal = (value) => {
   const num = parseInt(
     value.toString().replace(/[^\d]+/g, ""),
@@ -701,6 +707,11 @@ class DjangoFilterString extends String {
 
   forceEscape() {
     this.value = djangoFilters.forceEscape(this.value);
+    return this;
+  }
+
+  iriencode() {
+    this.value = djangoFilters.iriencode(this.value);
     return this;
   }
 

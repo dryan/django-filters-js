@@ -103,6 +103,12 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter("1000000").intcomma().toString()).toBe("1,000,000");
   });
 
+  test("iriencode", () => {
+    expect(djangoFilter("S\xf8r-Tr\xf8ndelag").iriencode().toString()).toBe(
+      "S%C3%B8r-Tr%C3%B8ndelag"
+    );
+  });
+
   test("time: default format", () => {
     expect(djangoFilter("21 December 2000").time().toString()).toBe("midnight");
   });
