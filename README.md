@@ -6,27 +6,11 @@ A project to convert the default and contrib.humanize template string filters fr
 
 Add `<script src="django-filters.min.js"></script>` to your page. There are no dependencies.
 
-## Chainable Strings
-
-`djangoFilter` implements a chainable object similar to jQuery. This allows for multiple methods to be run in sequence. For example:
-
-    var myString    =   djangoFilter("This is a test sentence").slugify().cut('-'); // becomes "thisisatestsentence"
-    // or
-    var myString2   =   djangoFilter(200000);
-    myString2.apnumber().intcomma(); // becomes 200,000
-
-## Methods
-
-_In addition to the chainable pattern, you can call each method directly at `djangoFilters.[methodName]` with the string, number or date to filter as the first argument._
-
-    djangoFilters.slugify("This is a test sentence"); // becomes "this-is-a-test-sentence"
-    djangoFilters.slugify("This is a test sentence").cut('-'); // raises a TypeError
-
 ## Default Filters
 
 <a id="addslashes"></a>
 
-### [.addslashes()](#addslashes)
+### [.addslashes(value)](#addslashes)
 
 Adds slashes before quotes. Useful for escaping strings in CSV, for example.
 
@@ -34,7 +18,7 @@ Adds slashes before quotes. Useful for escaping strings in CSV, for example.
 
 <a id="capfirst"></a>
 
-### [.capfirst()](#capfirst)
+### [.capfirst(value)](#capfirst)
 
 Capitalizes the first character of the value. If the first character is not a letter, this filter has no effect.
 
@@ -42,7 +26,7 @@ Capitalizes the first character of the value. If the first character is not a le
 
 <a id="center"></a>
 
-### [.center(length)](#center)
+### [.center(value, length)](#center)
 
 Centers the value in a field of a given width.
 
@@ -50,13 +34,13 @@ Centers the value in a field of a given width.
 
 <a id="date"></a>
 
-### [.date(format)](#date)
+### [.date(value, format)](#date)
 
 Formats a Date object according to the `format` parameter (a string). For formatting options, see [Django's date documentation](https://docs.djangoproject.com/en/latest/ref/templates/builtins/#date).
 
 <a id="escape"></a>
 
-### [.escape()](#escape)
+### [.escape(value)](#escape)
 
 Escapes a string’s HTML. Specifically, it makes these replacements:
 
@@ -68,31 +52,31 @@ Escapes a string’s HTML. Specifically, it makes these replacements:
 
 <a id="escapejs"></a>
 
-### [.escapejs()](#escapejs)
+### [.escapejs(value)](#escapejs)
 
 Escapes characters for use in JavaScript strings. This does not make the string safe for use in HTML or JavaScript template literals, but does protect you from syntax errors when using templates to generate JavaScript/JSON.
 
 <a id="filesizeformat"></a>
 
-### [.filesizeformat()](#filesizeformat)
+### [.filesizeformat(value)](#filesizeformat)
 
 Formats the value like a ‘human-readable’ file size (i.e. `13 KB`, `4.1 MB`, `102 bytes`, etc.).
 
 <a id="floatformat"></a>
 
-### [.floatformat(precision)](#floatformat)
+### [.floatformat(value, precision)](#floatformat)
 
 When used without an argument, rounds a floating-point number to one decimal place – but only if there’s a decimal part to be displayed. Default precision is -1. See https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#floatformat for more details.
 
 <a id="force_escape"></a>
 
-### [.force_escape(precision)](#force_escape)
+### [.force_escape(value)](#force_escape)
 
 This is an alias of `.escape()`. Unlike the Django version, the behavior here is identical to `.escape()`. Calling this multiple times returns the same result each time.
 
 <a id="iriencode"></a>
 
-### [.iriencode()](#iriencode)
+### [.iriencode(value)](#iriencode)
 
 Converts an IRI (Internationalized Resource Identifier) to a string that is suitable for including in a URL. This is necessary if you’re trying to use strings containing non-ASCII characters in a URL.
 
@@ -100,7 +84,7 @@ It’s safe to use this filter on a string that has already gone through the url
 
 <a id="linebreaks"></a>
 
-### [.linebreaks(autoescape)](#linebreaks)
+### [.linebreaks(value, autoescape)](#linebreaks)
 
 Replaces line breaks in plain text with appropriate HTML; a single newline becomes an HTML line break (`<br>`) and a new line followed by a blank line becomes a paragraph break (`</p>`)
 
@@ -108,7 +92,7 @@ Replaces line breaks in plain text with appropriate HTML; a single newline becom
 
 <a id="linebreaksbr"></a>
 
-### [.linebreaksbr(autoescape)](#linebreaksbr)
+### [.linebreaksbr(value, autoescape)](#linebreaksbr)
 
 Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
 
@@ -116,25 +100,25 @@ Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
 
 <a id="linenumbers"></a>
 
-### [.linenumbers(autoescape)](#linenumbers)
+### [.linenumbers(value, autoescape)](#linenumbers)
 
 Displays text with line numbers.
 
 <a id="ljust"></a>
 
-### [.ljust(width)](#ljust)
+### [.ljust(value, width)](#ljust)
 
 Left-aligns the value in a field of a given width.
 
 <a id="rjust"></a>
 
-### [.rjust(width)](#rjust)
+### [.rjust(value, width)](#rjust)
 
 Right-aligns the value in a field of a given width.
 
 <a id="phone2numeric"></a>
 
-### [.phone2numeric()](#phone2numeric)
+### [.phone2numeric(value)](#phone2numeric)
 
 Converts a phone number (possibly containing letters) to its numerical equivalent.
 
@@ -142,19 +126,19 @@ The input doesn’t have to be a valid phone number. This will happily convert a
 
 <a id="slugify"></a>
 
-### [.slugify(allowUnicode)](#slugify)
+### [.slugify(value, allowUnicode)](#slugify)
 
 Returns a URI safe version of the string, lowercased with all non-standard characters replaced with '-'. If allowUnicode is true, most utf-8 characters respresenting letters or numbers will be allowed.
 
 <a id="time"></a>
 
-### [.time(format)](#time)
+### [.time(value, format)](#time)
 
 An alias of `.date()`. Unlike the Django implementation, `.time()` works with Date objects since there isn't a time-only equivalent in JavaScript.
 
 <a id="cut"></a>
 
-### [.cut(toCut)](#cut)
+### [.cut(value, toCut)](#cut)
 
 Removes all instances of the `toCut` parameter from the string.
 
@@ -162,7 +146,7 @@ Removes all instances of the `toCut` parameter from the string.
 
 <a id="intcomma"></a>
 
-### [.intcomma()](#intcomma)
+### [.intcomma(value)](#intcomma)
 
 Adds comma separators to a number or string representation of a number.
 
@@ -172,7 +156,7 @@ Adds comma separators to a number or string representation of a number.
 
 <a id="apnumber"></a>
 
-### [.apnumber()](#apnumber)
+### [.apnumber(value)](#apnumber)
 
 For integers 0-9, returns the word. For integers 10+, returns the integer.
 
@@ -181,7 +165,7 @@ For integers 0-9, returns the word. For integers 10+, returns the integer.
 
 <a id="ordinal"></a>
 
-### [.ordinal()](#ordinal)
+### [.ordinal(value)](#ordinal)
 
 Appends the ordinal suffix to a number or string representation of a number
 
