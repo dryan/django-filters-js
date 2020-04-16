@@ -54,6 +54,19 @@ djangoFilters._utils = {
     }
     return undefined;
   },
+
+  urlquote: (value, safe) => {
+    value = value.toString();
+    if (typeof safe === "undefined") {
+      safe = "/";
+    }
+    safe = safe
+      .split("")
+      .map((chr) => `\\${chr}`)
+      .join("|");
+    const notSafe = new RegExp(`[^${safe}]`, "g");
+    return value.replace(notSafe, encodeURIComponent);
+  },
 };
 
 djangoFilters.addslashes = (value) =>
@@ -463,8 +476,7 @@ djangoFilters.intcomma = (value) => {
 
 djangoFilters.iriencode = (value) => {
   value = value.toString();
-  // the decode call makes sure we don't double encode this
-  return encodeURIComponent(decodeURIComponent(value));
+  return djangoFilters._utils.urlquote(value, "/#%[]=:;$&()+,!?*@'~");
 };
 
 djangoFilters.linebreaks = (value, autoescape) => {
@@ -745,6 +757,11 @@ djangoFilters.title = (value) => {
   );
   return value;
 };
+
+djangoFilters.upper = (value) => value.toString().toUpperCase();
+
+djangoFilters.urlencode = (value, safe) =>
+  djangoFilters._utils.urlquote(value, safe);
 
 // setup up the translations and add the US English variants
 djangoFilters.translations = djangoFilters.translations || {};

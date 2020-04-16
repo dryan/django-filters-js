@@ -164,6 +164,16 @@ Similar to `.timesince()` except it compares _now_ to a date in the future.
 
 Converts a string into titlecase by making words start with an uppercase character and the remaining characters lowercase. This filter makes no effort to keep “trivial words” in lowercase.
 
+### .upper(value)
+
+Converts a string into all uppercase.
+
+### .urlencode(value, safe)
+
+Escapes a value for use in a URL. An optional argument containing the characters which should not be escaped can be provided.
+
+If not provided, the ‘/’ character is assumed safe. An empty string can be provided when all characters should be escaped.
+
 ## django.contrib.humanize Filters
 
 ### .intcomma(value)

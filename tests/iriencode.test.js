@@ -9,7 +9,7 @@ describe("iriencode", () => {
 
   test("urlencoded", () => {
     expect(
-      djangoFilters.iriencode(encodeURIComponent("fran\xe7ois & jill"))
+      djangoFilters.iriencode(djangoFilters.urlencode("fran\xe7ois & jill"))
     ).toBe("fran%C3%A7ois%20%26%20jill");
   });
 });
