@@ -507,6 +507,9 @@ djangoFilters.linenumbers = (value, autoescape) => {
   return lines.join("\n");
 };
 
+djangoFilters.ljust = (value, width) =>
+  djangoFilters._utils.padEnd(value, width || 0, " ");
+
 djangoFilters.ordinal = (value) => {
   const num = parseInt(
     value.toString().replace(/[^\d]+/g, ""),
@@ -523,6 +526,9 @@ djangoFilters.ordinal = (value) => {
   }
   return [value, djangoFilters._utils.translate("ordinals", num % 10)].join("");
 };
+
+djangoFilters.rjust = (value, width) =>
+  djangoFilters._utils.padStart(value, width || 0, " ");
 
 djangoFilters.slugify = (value, allowUnicode) => {
   value = value.toString();
@@ -775,6 +781,16 @@ class DjangoFilterString extends String {
 
   linenumbers(autoescape) {
     this.value = djangoFilters.linenumbers(this.value, autoescape);
+    return this;
+  }
+
+  ljust(width) {
+    this.value = djangoFilters.ljust(this.value, width);
+    return this;
+  }
+
+  rjust(width) {
+    this.value = djangoFilters.rjust(this.value, width);
     return this;
   }
 

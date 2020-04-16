@@ -120,6 +120,18 @@ Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
 
 Displays text with line numbers.
 
+<a id="ljust"></a>
+
+### [.ljust(width)](#ljust)
+
+Left-aligns the value in a field of a given width.
+
+<a id="rjust"></a>
+
+### [.rjust(width)](#rjust)
+
+Right-aligns the value in a field of a given width.
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)

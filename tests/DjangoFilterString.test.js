@@ -127,6 +127,14 @@ describe("chainable filters: individual methods", () => {
     );
   });
 
+  test("ljust", () => {
+    expect(djangoFilter("test").ljust(10).toString()).toBe("test      ");
+  });
+
+  test("rjust", () => {
+    expect(djangoFilter("test").rjust(10).toString()).toBe("      test");
+  });
+
   test("time: default format", () => {
     expect(djangoFilter("21 December 2000").time().toString()).toBe("midnight");
   });
