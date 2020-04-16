@@ -132,6 +132,14 @@ Left-aligns the value in a field of a given width.
 
 Right-aligns the value in a field of a given width.
 
+<a id="phone2numeric"></a>
+
+### [.phone2numeric()](#phone2numeric)
+
+Converts a phone number (possibly containing letters) to its numerical equivalent.
+
+The input doesn’t have to be a valid phone number. This will happily convert any string.
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)

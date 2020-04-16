@@ -131,6 +131,12 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter("test").ljust(10).toString()).toBe("test      ");
   });
 
+  test("phone2numeric", () => {
+    expect(djangoFilter("1-800-call-me").phone2numeric().toString()).toBe(
+      "1-800-2255-63"
+    );
+  });
+
   test("rjust", () => {
     expect(djangoFilter("test").rjust(10).toString()).toBe("      test");
   });
