@@ -121,6 +121,12 @@ describe("chainable filters: individual methods", () => {
     );
   });
 
+  test("linenumbers", () => {
+    expect(djangoFilter("line 1\nline 2").linenumbers().toString()).toBe(
+      "1. line 1\n2. line 2"
+    );
+  });
+
   test("time: default format", () => {
     expect(djangoFilter("21 December 2000").time().toString()).toBe("midnight");
   });

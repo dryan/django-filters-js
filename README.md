@@ -114,6 +114,12 @@ Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
 
 `autoescape` is true by default. When `autoescape` is true, the content will be passed through `.escape()` before the `<br>` tags are inserted.
 
+<a id="linenumbers"></a>
+
+### [.linenumbers(autoescape)](#linenumbers)
+
+Displays text with line numbers.
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)

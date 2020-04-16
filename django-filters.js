@@ -490,6 +490,23 @@ djangoFilters.linebreaksbr = (value, autoescape) => {
   return value;
 };
 
+djangoFilters.linenumbers = (value, autoescape) => {
+  if (typeof autoescape === "undefined") {
+    autoescape = true;
+  }
+  value = value.toString();
+  let lines = value.split("\n");
+  const width = lines.length.toString().length;
+  lines = lines.map((line, index) => {
+    const lineNumber = djangoFilters._utils.padStart(index + 1, width, "0");
+    if (autoescape) {
+      line = djangoFilters.escape(line);
+    }
+    return `${lineNumber}. ${line}`;
+  });
+  return lines.join("\n");
+};
+
 djangoFilters.ordinal = (value) => {
   const num = parseInt(
     value.toString().replace(/[^\d]+/g, ""),
@@ -753,6 +770,11 @@ class DjangoFilterString extends String {
 
   linebreaksbr(autoescape) {
     this.value = djangoFilters.linebreaksbr(this.value, autoescape);
+    return this;
+  }
+
+  linenumbers(autoescape) {
+    this.value = djangoFilters.linenumbers(this.value, autoescape);
     return this;
   }
 
