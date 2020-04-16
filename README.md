@@ -178,6 +178,27 @@ Attempts to remove all HTML tags. Do not put this output directly into the DOM.
 
 An alias of `.date()`. Unlike the Django implementation, `.time()` works with Date objects since there isn't a time-only equivalent in JavaScript.
 
+<a id="timesince"></a>
+
+### [.timesince(value, format)](#timesince)
+
+Formats a date as the time since that date (e.g., “4 days, 6 hours”).
+
+Takes an optional argument that is a variable containing the date to use as the comparison point (without the argument, the comparison point is _now_). For example, if `blogDate` is a date instance representing midnight on 1 June 2006, and `commentDate` is a date instance for 08:00 on 1 June 2006, then the following would return “8 hours”:
+
+```js
+djangoFilters.timesince(blogDate, commentDate);
+```
+
+Minutes is the smallest unit used, and “0 minutes” will be returned for any date that is in the future relative to the comparison point.
+
+<a id="timeuntil"></a>
+
+### [.timeuntil(value, format)](#timeuntil)
+
+Similar to `.timesince()` except it compares _now_ to a date in the future.
+
+
 ## django.contrib.humanize Filters
 
 <a id="intcomma"></a>
