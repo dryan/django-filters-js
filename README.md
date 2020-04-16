@@ -124,6 +124,37 @@ Converts a phone number (possibly containing letters) to its numerical equivalen
 
 The input doesn’t have to be a valid phone number. This will happily convert any string.
 
+<a id="pluralize"></a>
+
+### [.pluralize(value, suffixes)](#pluralize)
+
+Returns a plural suffix if the value is not 1, '1', or an object of length 1. By default, this suffix is 's'.
+
+Example:
+
+```js
+`You have ${numMessages} message${djangoFilters.pluralize(numMessages)}.`
+```
+
+If numMessages is 1, the output will be `''` (an empty string). If numMessages is 2 the output will be `s`.
+
+For words that require a suffix other than 's', you can provide an alternate suffix as a parameter to the filter.
+
+Example:
+
+```js
+`You have ${numWalruses } walrus${djangoFilters.pluralize(numWalruses, "es")}.`
+```
+
+For words that don’t pluralize by simple suffix, you can specify both a singular and plural suffix, separated by a comma.
+
+Example:
+
+```js
+`You have ${numCherries} cherr${djangoFilters.pluralize(numCherries, 'y,ies')}.`
+```
+
+
 <a id="slugify"></a>
 
 ### [.slugify(value, allowUnicode)](#slugify)
