@@ -613,6 +613,12 @@ djangoFilters.slugify = (value, allowUnicode) => {
     .replace(/^-|-$/gu, "");
 };
 
+djangoFilters.striptags = (value) => {
+  value = value.toString();
+  value = value.replace(/<(?:.|\s)*?>/g, "");
+  return value;
+};
+
 djangoFilters.time = (date, format) =>
   djangoFilters.date(date, format || djangoFilters.date.defaultFormats.time);
 

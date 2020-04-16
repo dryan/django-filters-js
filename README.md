@@ -32,6 +32,12 @@ Centers the value in a field of a given width.
 
 - `"django".center(15)` becomes `"     django    "`
 
+<a id="cut"></a>
+
+### [.cut(value, toCut)](#cut)
+
+Removes all instances of the `toCut` parameter from the string.
+
 <a id="date"></a>
 
 ### [.date(value, format)](#date)
@@ -154,24 +160,23 @@ Example:
 `You have ${numCherries} cherr${djangoFilters.pluralize(numCherries, 'y,ies')}.`
 ```
 
-
 <a id="slugify"></a>
 
 ### [.slugify(value, allowUnicode)](#slugify)
 
 Returns a URI safe version of the string, lowercased with all non-standard characters replaced with '-'. If allowUnicode is true, most utf-8 characters respresenting letters or numbers will be allowed.
 
+<a id="striptags"></a>
+
+### [.striptags(value)](#striptags)
+
+Attempts to remove all HTML tags. Do not put this output directly into the DOM.
+
 <a id="time"></a>
 
 ### [.time(value, format)](#time)
 
 An alias of `.date()`. Unlike the Django implementation, `.time()` works with Date objects since there isn't a time-only equivalent in JavaScript.
-
-<a id="cut"></a>
-
-### [.cut(value, toCut)](#cut)
-
-Removes all instances of the `toCut` parameter from the string.
 
 ## django.contrib.humanize Filters
 
