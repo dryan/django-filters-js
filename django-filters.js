@@ -241,13 +241,14 @@ djangoFilters.date = (value, format) => {
     formats.O,
   ].join("");
 
-  format = format.split("");
-  format.reverse();
   const ret = [];
-  for (let i = format.length - 1; i >= 0; i--) {
-    const f = format[i];
-    ret.push(f in formats ? formats[f] : f);
-  }
+  format.match(/(\\?.)/g).forEach((f) => {
+    if (f.match(/^\\/)) {
+      ret.push(f.replace(/^\\/, ""));
+    } else {
+      ret.push(f in formats ? formats[f] : f);
+    }
+  });
   if (ret.length === 1 && typeof ret[0] === "boolean") {
     return ret[0];
   }

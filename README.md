@@ -44,6 +44,14 @@ Removes all instances of the `toCut` parameter from the string.
 
 Formats a Date object according to the `format` parameter (a string). For formatting options, see [Django's date documentation](https://docs.djangoproject.com/en/latest/ref/templates/builtins/#date).
 
+Note that you can backslash-escape a format string if you want to use the “raw” value. In this example, both “h” and “m” are backslash-escaped, because otherwise each is a format string that displays the hour and the month, respectively:
+
+```js
+djangoFilters.date(value, 'H\\h i\\m');
+```
+
+This would display as “01h 23m”. Note the need to escape the backslash itself, which differs from Django Templates.
+
 <a id="escape"></a>
 
 ### [.escape(value)](#escape)

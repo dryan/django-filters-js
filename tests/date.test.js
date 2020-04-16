@@ -275,4 +275,22 @@ describe("date", () => {
     const invalidDate = new Date("monkeybat");
     expect(djangoFilters.date(invalidDate, "c")).toBe(invalidDate);
   });
+
+  test("escaped characters", () => {
+    expect(djangoFilters.date(new Date(2020, 1, 1, 1, 23), "H\\h i\\m")).toBe(
+      "01h 23m"
+    );
+  });
+
+  test("escaped characters raw string", () => {
+    expect(
+      djangoFilters.date(new Date(2020, 1, 1, 1, 23), String.raw`H\h i\m`)
+    ).toBe("01h 23m");
+  });
+
+  test("double escaped characters", () => {
+    expect(
+      djangoFilters.date(new Date(2020, 1, 1, 1, 23), "H\\\\h i\\\\m")
+    ).toBe("01\\01 23\\02");
+  });
 });
