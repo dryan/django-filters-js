@@ -8,37 +8,29 @@ Add `<script src="django-filters.min.js"></script>` to your page. There are no d
 
 ## Default Filters
 
-### [.addslashes(value)](#addslashes)
+### .addslashes(value)
 
 Adds slashes before quotes. Useful for escaping strings in CSV, for example.
 
 - `"I'm using Django"` becomes `"I\'m using Django"`
 
-<a id="capfirst"></a>
-
-### [.capfirst(value)](#capfirst)
+### .capfirst(value)
 
 Capitalizes the first character of the value. If the first character is not a letter, this filter has no effect.
 
 - `"django"` becomes `"Django"`
 
-<a id="center"></a>
-
-### [.center(value, length)](#center)
+### .center(value, length)
 
 Centers the value in a field of a given width.
 
 - `"django".center(15)` becomes `"     django    "`
 
-<a id="cut"></a>
-
-### [.cut(value, toCut)](#cut)
+### .cut(value, toCut)
 
 Removes all instances of the `toCut` parameter from the string.
 
-<a id="date"></a>
-
-### [.date(value, format)](#date)
+### .date(value, format)
 
 Formats a Date object according to the `format` parameter (a string). For formatting options, see [Django's date documentation](https://docs.djangoproject.com/en/latest/ref/templates/builtins/#date).
 
@@ -50,9 +42,7 @@ djangoFilters.date(value, 'H\\h i\\m');
 
 This would display as “01h 23m”. Note the need to escape the backslash itself, which differs from Django Templates.
 
-<a id="escape"></a>
-
-### [.escape(value)](#escape)
+### .escape(value)
 
 Escapes a string’s HTML. Specifically, it makes these replacements:
 
@@ -62,83 +52,59 @@ Escapes a string’s HTML. Specifically, it makes these replacements:
 - " (double quote) is converted to &quot;
 - & is converted to &amp;
 
-<a id="escapejs"></a>
-
-### [.escapejs(value)](#escapejs)
+### .escapejs(value)
 
 Escapes characters for use in JavaScript strings. This does not make the string safe for use in HTML or JavaScript template literals, but does protect you from syntax errors when using templates to generate JavaScript/JSON.
 
-<a id="filesizeformat"></a>
-
-### [.filesizeformat(value)](#filesizeformat)
+### .filesizeformat(value)
 
 Formats the value like a ‘human-readable’ file size (i.e. `13 KB`, `4.1 MB`, `102 bytes`, etc.).
 
-<a id="floatformat"></a>
+### .floatformat(value, precision)
 
-### [.floatformat(value, precision)](#floatformat)
+When used without an argument, rounds a floating-point number to one decimal place – but only if there’s a decimal part to be displayed. Default precision is -1. See [Django's floatformat documentation](https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#floatformat) for more details.
 
-When used without an argument, rounds a floating-point number to one decimal place – but only if there’s a decimal part to be displayed. Default precision is -1. See https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#floatformat for more details.
-
-<a id="force_escape"></a>
-
-### [.force_escape(value)](#force_escape)
+### .force_escape(value)(#force_escape)
 
 This is an alias of `.escape()`. Unlike the Django version, the behavior here is identical to `.escape()`. Calling this multiple times returns the same result each time.
 
-<a id="iriencode"></a>
-
-### [.iriencode(value)](#iriencode)
+### .iriencode(value)
 
 Converts an IRI (Internationalized Resource Identifier) to a string that is suitable for including in a URL. This is necessary if you’re trying to use strings containing non-ASCII characters in a URL.
 
 It’s safe to use this filter on a string that has already gone through the urlencode filter.
 
-<a id="linebreaks"></a>
-
-### [.linebreaks(value, autoescape)](#linebreaks)
+### .linebreaks(value, autoescape)
 
 Replaces line breaks in plain text with appropriate HTML; a single newline becomes an HTML line break (`<br>`) and a new line followed by a blank line becomes a paragraph break (`</p>`)
 
 `autoescape` is true by default. When `autoescape` is true, the content will be passed through `.escape()` before the `<p>` and `<br>` tags are inserted.
 
-<a id="linebreaksbr"></a>
-
-### [.linebreaksbr(value, autoescape)](#linebreaksbr)
+### .linebreaksbr(value, autoescape)
 
 Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
 
 `autoescape` is true by default. When `autoescape` is true, the content will be passed through `.escape()` before the `<br>` tags are inserted.
 
-<a id="linenumbers"></a>
-
-### [.linenumbers(value, autoescape)](#linenumbers)
+### .linenumbers(value, autoescape)
 
 Displays text with line numbers.
 
-<a id="ljust"></a>
-
-### [.ljust(value, width)](#ljust)
+### .ljust(value, width)
 
 Left-aligns the value in a field of a given width.
 
-<a id="rjust"></a>
-
-### [.rjust(value, width)](#rjust)
+### .rjust(value, width)
 
 Right-aligns the value in a field of a given width.
 
-<a id="phone2numeric"></a>
-
-### [.phone2numeric(value)](#phone2numeric)
+### .phone2numeric(value)(#phone2numeric)
 
 Converts a phone number (possibly containing letters) to its numerical equivalent.
 
 The input doesn’t have to be a valid phone number. This will happily convert any string.
 
-<a id="pluralize"></a>
-
-### [.pluralize(value, suffixes)](#pluralize)
+### .pluralize(value, suffixes)
 
 Returns a plural suffix if the value is not 1, '1', or an object of length 1. By default, this suffix is 's'.
 
@@ -166,27 +132,19 @@ Example:
 `You have ${numCherries} cherr${djangoFilters.pluralize(numCherries, 'y,ies')}.`
 ```
 
-<a id="slugify"></a>
-
-### [.slugify(value, allowUnicode)](#slugify)
+### .slugify(value, allowUnicode)
 
 Returns a URI safe version of the string, lowercased with all non-standard characters replaced with '-'. If allowUnicode is true, most utf-8 characters respresenting letters or numbers will be allowed.
 
-<a id="striptags"></a>
-
-### [.striptags(value)](#striptags)
+### .striptags(value)
 
 Attempts to remove all HTML tags. Do not put this output directly into the DOM.
 
-<a id="time"></a>
-
-### [.time(value, format)](#time)
+### .time(value, format)
 
 An alias of `.date()`. Unlike the Django implementation, `.time()` works with Date objects since there isn't a time-only equivalent in JavaScript.
 
-<a id="timesince"></a>
-
-### [.timesince(value, format)](#timesince)
+### .timesince(value, format)
 
 Formats a date as the time since that date (e.g., “4 days, 6 hours”).
 
@@ -198,18 +156,17 @@ djangoFilters.timesince(blogDate, commentDate);
 
 Minutes is the smallest unit used, and “0 minutes” will be returned for any date that is in the future relative to the comparison point.
 
-<a id="timeuntil"></a>
-
-### [.timeuntil(value, format)](#timeuntil)
+### .timeuntil(value, format)
 
 Similar to `.timesince()` except it compares _now_ to a date in the future.
 
+### .title(value)
+
+Converts a string into titlecase by making words start with an uppercase character and the remaining characters lowercase. This filter makes no effort to keep “trivial words” in lowercase.
 
 ## django.contrib.humanize Filters
 
-<a id="intcomma"></a>
-
-### [.intcomma(value)](#intcomma)
+### .intcomma(value)
 
 Adds comma separators to a number or string representation of a number.
 
@@ -217,18 +174,14 @@ Adds comma separators to a number or string representation of a number.
 - `1000` becomes `1,000`
 - `100` becomes `100`
 
-<a id="apnumber"></a>
-
-### [.apnumber(value)](#apnumber)
+### .apnumber(value)
 
 For integers 0-9, returns the word. For integers 10+, returns the integer.
 
 - `1` becomes `one`
 - `10` becomes `10`
 
-<a id="ordinal"></a>
-
-### [.ordinal(value)](#ordinal)
+### .ordinal(value)
 
 Appends the ordinal suffix to a number or string representation of a number
 
