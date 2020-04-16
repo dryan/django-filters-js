@@ -84,6 +84,12 @@ Formats the value like a ‘human-readable’ file size (i.e. `13 KB`, `4.1 MB`,
 
 When used without an argument, rounds a floating-point number to one decimal place – but only if there’s a decimal part to be displayed. Default precision is -1. See https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#floatformat for more details.
 
+<a id="force_escape"></a>
+
+### [.force_escape(precision)](#force_escape)
+
+This is an alias of `.escape()`. Unlike the Django version, the behavior here is identical to `.escape()`. Calling this multiple times returns the same result each time.
+
 <a id="slugify"></a>
 
 ### [.slugify(allowUnicode)](#slugify)

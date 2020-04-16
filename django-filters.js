@@ -437,6 +437,12 @@ djangoFilters.floatformat = (value, precision) => {
   );
 };
 
+djangoFilters.force_escape = (value) => {
+  return djangoFilters.escape(value);
+};
+
+djangoFilters.forceEscape = djangoFilters.force_escape;
+
 djangoFilters.intcomma = (value) => {
   value = value.toString().split(".");
   const int = value[0];
@@ -685,6 +691,16 @@ class DjangoFilterString extends String {
 
   floatformat() {
     this.value = djangoFilters.floatformat(this.value);
+    return this;
+  }
+
+  force_escape() {
+    this.value = djangoFilters.force_escape(this.value);
+    return this;
+  }
+
+  forceEscape() {
+    this.value = djangoFilters.forceEscape(this.value);
     return this;
   }
 

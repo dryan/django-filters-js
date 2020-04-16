@@ -79,6 +79,26 @@ describe("chainable filters: individual methods", () => {
     expect(djangoFilter(7.7).floatformat().toString()).toBe("7.7");
   });
 
+  test("force_escape", () => {
+    expect(djangoFilter("x&y").force_escape().toString()).toBe("x&amp;y");
+  });
+
+  test("force_escape->force_escape", () => {
+    expect(djangoFilter("x&y").force_escape().force_escape().toString()).toBe(
+      "x&amp;y"
+    );
+  });
+
+  test("forceEscape", () => {
+    expect(djangoFilter("x&y").forceEscape().toString()).toBe("x&amp;y");
+  });
+
+  test("forceEscape->forceEscape", () => {
+    expect(djangoFilter("x&y").forceEscape().forceEscape().toString()).toBe(
+      "x&amp;y"
+    );
+  });
+
   test("intcomma", () => {
     expect(djangoFilter("1000000").intcomma().toString()).toBe("1,000,000");
   });
