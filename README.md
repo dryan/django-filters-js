@@ -92,11 +92,23 @@ This is an alias of `.escape()`. Unlike the Django version, the behavior here is
 
 <a id="iriencode"></a>
 
-### [.iriencode(precision)](#iriencode)
+### [.iriencode()](#iriencode)
 
 Converts an IRI (Internationalized Resource Identifier) to a string that is suitable for including in a URL. This is necessary if you’re trying to use strings containing non-ASCII characters in a URL.
 
 It’s safe to use this filter on a string that has already gone through the urlencode filter.
+
+<a id="linebreaks"></a>
+
+### [.linebreaks()](#linebreaks)
+
+Replaces line breaks in plain text with appropriate HTML; a single newline becomes an HTML line break (`<br>`) and a new line followed by a blank line becomes a paragraph break (`</p>`)
+
+<a id="linebreaksbr"></a>
+
+### [.linebreaksbr()](#linebreaksbr)
+
+Converts all newlines in a piece of plain text to HTML line breaks (`<br>`).
 
 <a id="slugify"></a>
 

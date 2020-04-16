@@ -459,6 +459,37 @@ djangoFilters.iriencode = (value) => {
   return encodeURIComponent(decodeURIComponent(value));
 };
 
+djangoFilters.linebreaks = (value, autoescape) => {
+  if (typeof autoescape === "undefined") {
+    autoescape = true;
+  }
+  value = value.toString();
+  value = value.replace(/\r\n|\r/g, "\n");
+  value = value.split(/\n{2,}/g);
+  if (autoescape) {
+    value = value.map(
+      (para) => `<p>${djangoFilters.escape(para).replace(/\n/g, "<br>")}</p>`
+    );
+  } else {
+    value = value.map((para) => `<p>${para.replace(/\n/g, "<br>")}</p>`);
+  }
+  value = value.join("\n\n");
+  return value;
+};
+
+djangoFilters.linebreaksbr = (value, autoescape) => {
+  if (typeof autoescape === "undefined") {
+    autoescape = true;
+  }
+  value = value.toString();
+  value = value.replace(/\r\n|\r/g, "\n");
+  if (autoescape) {
+    value = djangoFilters.escape(value);
+  }
+  value = value.replace(/\n/g, "<br>");
+  return value;
+};
+
 djangoFilters.ordinal = (value) => {
   const num = parseInt(
     value.toString().replace(/[^\d]+/g, ""),
@@ -712,6 +743,16 @@ class DjangoFilterString extends String {
 
   iriencode() {
     this.value = djangoFilters.iriencode(this.value);
+    return this;
+  }
+
+  linebreaks() {
+    this.value = djangoFilters.linebreaks(this.value);
+    return this;
+  }
+
+  linebreaksbr() {
+    this.value = djangoFilters.linebreaksbr(this.value);
     return this;
   }
 

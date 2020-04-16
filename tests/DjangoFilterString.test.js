@@ -109,6 +109,18 @@ describe("chainable filters: individual methods", () => {
     );
   });
 
+  test("linebreaks", () => {
+    expect(djangoFilter("line 1").linebreaks().toString()).toBe(
+      "<p>line 1</p>"
+    );
+  });
+
+  test("linebreaksbr", () => {
+    expect(djangoFilter("line 1\nline 2").linebreaksbr().toString()).toBe(
+      "line 1<br>line 2"
+    );
+  });
+
   test("time: default format", () => {
     expect(djangoFilter("21 December 2000").time().toString()).toBe("midnight");
   });
