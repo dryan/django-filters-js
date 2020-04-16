@@ -8,8 +8,6 @@ Add `<script src="django-filters.min.js"></script>` to your page. There are no d
 
 ## Default Filters
 
-<a id="addslashes"></a>
-
 ### [.addslashes(value)](#addslashes)
 
 Adds slashes before quotes. Useful for escaping strings in CSV, for example.
