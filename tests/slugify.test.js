@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 // these tests come from Django's test suite
 

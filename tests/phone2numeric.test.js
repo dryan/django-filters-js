@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 describe("phone2numeric", () => {
   test("1-800-call-me", () => {

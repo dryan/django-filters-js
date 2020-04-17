@@ -6,7 +6,7 @@ Object.defineProperty(navigator, "language", {
 
 window.djangoFilters = { translations: { "en-us": { apnumbers: { 0: "0" } } } };
 
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 describe("_utils.translate", () => {
   test("matched translation", () => {

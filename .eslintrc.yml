@@ -7,8 +7,9 @@ extends: "eslint:recommended"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
+  djangoFilters: false
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
 rules: {}
-ignorePatterns: ["*test.js"]
+ignorePatterns: ["*test.js", "*.min.js"]

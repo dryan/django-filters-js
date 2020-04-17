@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 describe("ordinal", () => {
   test("1", () => {

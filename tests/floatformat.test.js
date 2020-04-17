@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 describe("floatformat", () => {
   test("7.7, no roundTo", () => {

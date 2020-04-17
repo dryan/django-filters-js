@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 describe("_utils.padStart", () => {
   const randomPadding = Math.floor(Math.random() * 1000000);

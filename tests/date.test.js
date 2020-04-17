@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 const dates = [
   new Date(2000, 0, 1, 0, 0, 0),

@@ -4,7 +4,7 @@ Object.defineProperty(navigator, "language", {
   },
 });
 
-const { djangoFilters } = require("../django-filters");
+const { djangoFilters } = require("../dist/django-filters");
 
 describe("_utils.translate", () => {
   beforeAll(() => {
