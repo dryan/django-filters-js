@@ -19,7 +19,7 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "^1.1.0",
-    "jest": "^25.3.0"
+    "jest": "^29.3.1"
   },
   "jest": {
     "coverageThreshold": {
