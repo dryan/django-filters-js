@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../dist/django-filters");
+import { default as djangoFilters } from "../dist/index.js";
 
 describe("upper", () => {
   test("mixed case input", () => {

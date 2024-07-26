@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../dist/django-filters");
+import { default as djangoFilters } from "../dist/index.js";
 
 describe("center", () => {
   test("string, even padding", () => {
@@ -11,5 +11,9 @@ describe("center", () => {
 
   test("non string input", () => {
     expect(djangoFilters.center(42, 6)).toBe("  42  ");
+  });
+
+  test("no length", () => {
+    expect(djangoFilters.center("test")).toBe("test");
   });
 });

@@ -1,4 +1,6 @@
-const { djangoFilters } = require("../dist/django-filters");
+import { date } from "../dist/date.js";
+import { time } from "../dist/time.js";
+import { makeConstructor } from "timezoned-date";
 
 const dates = [
   new Date(2000, 0, 1, 0, 0, 0),
@@ -15,10 +17,8 @@ const formats = {
   c: "ISO 8601 Format",
   d: "Day of the month, 2 digits with leading zeros",
   D: "Day of the week, textual, 3 letters",
-  E:
-    "Month, locale specific alternative representation usually used for long date representation",
-  f:
-    "Time, in 12-hour hours and minutes, with minutes left off if they're zero",
+  E: "Month, locale specific alternative representation usually used for long date representation",
+  f: "Time, in 12-hour hours and minutes, with minutes left off if they're zero",
   F: "Month, textual, long",
   g: "Hour, 12-hour format without leading zeros",
   G: "Hour, 24-hour format without leading zeros",
@@ -33,8 +33,7 @@ const formats = {
   n: "Month without leading zeros",
   N: "Month abbreviation in Associated Press style",
   O: "Difference to Greenwich time in hours",
-  P:
-    "Time, in 12-hour hours, minutes and 'a.m.'/'p.m.', with minutes left off if they're zero and the special-case strings 'midnight' and 'noon' if appropriate",
+  P: "Time, in 12-hour hours, minutes and 'a.m.'/'p.m.', with minutes left off if they're zero and the special-case strings 'midnight' and 'noon' if appropriate",
   r: "RFC 2822 formatted date",
   s: "Seconds, 2 digits with leading zeros",
   S: "English ordinal suffix for day of the month, 2 characters",
@@ -47,8 +46,7 @@ const formats = {
   y: "Year, 2 digits",
   Y: "Year, 4 digits",
   z: "Day of the year",
-  Z:
-    "Time zone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.",
+  Z: "Time zone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.",
 };
 
 const answers = [
@@ -245,52 +243,74 @@ const answers = [
 ];
 
 describe("date", () => {
-  dates.forEach((date, index) => {
+  dates.forEach((d, index) => {
     let answer = answers[index];
     Object.keys(formats).forEach((formatChar) => {
       let formatDescription = formats[formatChar];
-      test(`${date} - ${formatDescription}`, () => {
-        expect(djangoFilters.date(date, formatChar)).toBe(answer[formatChar]);
+      test(`${d} - ${formatDescription}`, () => {
+        expect(date(d, formatChar)).toBe(answer[formatChar]);
       });
     });
   });
 
+  test("T format with no navigator.language", () => {
+    Object.defineProperty(global, "navigator", {
+      value: {
+        language: undefined,
+      },
+    });
+    expect(date(new Date(2000, 0, 1, 0, 0, 0), "T")).toBe("EST");
+  });
+
   test("default date format", () => {
-    expect(djangoFilters.date(dates[0])).toBe("Jan. 1, 2000");
+    expect(date(dates[0])).toBe("Jan. 1, 2000");
   });
 
   test("default time format", () => {
-    expect(djangoFilters.time(dates[0])).toBe("midnight");
+    expect(time(dates[0])).toBe("midnight");
+  });
+
+  test("date with positive timezone offset", () => {
+    let tzDate = makeConstructor(240);
+    expect(date(new tzDate(2000, 0, 1, 0, 0, 0), "O")).toBe("+0400");
+  });
+
+  test("date with negative timezone offset", () => {
+    let tzDate = makeConstructor(-240);
+    expect(date(new tzDate(2000, 0, 1, 0, 0, 0), "O")).toBe("-0400");
+  });
+
+  test("date with UTC offset", () => {
+    let tzDate = makeConstructor(0);
+    expect(date(new tzDate(2000, 0, 1, 0, 0, 0), "O")).toBe("+0000");
   });
 
   test("week number 52", () => {
-    expect(djangoFilters.date(new Date(2017, 11, 31), "W")).toBe("52");
+    expect(date(new Date(2017, 11, 31), "W")).toBe("52");
   });
 
   test("week number 53", () => {
-    expect(djangoFilters.date(new Date(2020, 11, 31), "W")).toBe("53");
+    expect(date(new Date(2020, 11, 31), "W")).toBe("53");
   });
 
   test("invalid date", () => {
     const invalidDate = new Date("monkeybat");
-    expect(djangoFilters.date(invalidDate, "c")).toBe(invalidDate);
+    expect(date(invalidDate, "c")).toBe(null);
   });
 
   test("escaped characters", () => {
-    expect(djangoFilters.date(new Date(2020, 1, 1, 1, 23), "H\\h i\\m")).toBe(
+    expect(date(new Date(2020, 1, 1, 1, 23), "H\\h i\\m")).toBe("01h 23m");
+  });
+
+  test("escaped characters raw string", () => {
+    expect(date(new Date(2020, 1, 1, 1, 23), String.raw`H\h i\m`)).toBe(
       "01h 23m"
     );
   });
 
-  test("escaped characters raw string", () => {
-    expect(
-      djangoFilters.date(new Date(2020, 1, 1, 1, 23), String.raw`H\h i\m`)
-    ).toBe("01h 23m");
-  });
-
   test("double escaped characters", () => {
-    expect(
-      djangoFilters.date(new Date(2020, 1, 1, 1, 23), "H\\\\h i\\\\m")
-    ).toBe("01\\01 23\\02");
+    expect(date(new Date(2020, 1, 1, 1, 23), "H\\\\h i\\\\m")).toBe(
+      "01\\01 23\\02"
+    );
   });
 });

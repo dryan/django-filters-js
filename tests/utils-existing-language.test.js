@@ -1,15 +1,11 @@
-Object.defineProperty(navigator, "language", {
-  get: function () {
-    return "xx-XX";
-  },
-});
-
-window.djangoFilters = { translations: { "en-us": { apnumbers: { 0: "0" } } } };
-
-const { djangoFilters } = require("../dist/django-filters");
+import { translate } from "../dist/_utils.js";
 
 describe("_utils.translate", () => {
   test("matched translation", () => {
-    expect(djangoFilters._utils.translate("apnumbers", 0)).toBe("0");
+    expect(translate("apnumbers", 0)).toBe("zero");
+  });
+
+  test("matched translation, short language code", () => {
+    expect(translate("apnumbers", 0, "en-UK")).toBe("zero");
   });
 });

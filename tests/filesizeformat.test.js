@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../dist/django-filters");
+import { filesizeformat } from "../dist/filesizeformat.js";
 
 describe("filesizeformat", () => {
   [
@@ -22,9 +22,7 @@ describe("filesizeformat", () => {
     test(`non-localized number ${index + 1}: ${testData[0]} -> ${
       testData[1]
     }`, () => {
-      expect(djangoFilters.filesizeformat(testData[0], false)).toBe(
-        testData[1]
-      );
+      expect(filesizeformat(testData[0], false)).toBe(testData[1]);
     });
   });
 
@@ -49,7 +47,7 @@ describe("filesizeformat", () => {
     test(`localized number ${index + 1}: ${testData[0]} -> ${
       testData[1]
     }`, () => {
-      expect(djangoFilters.filesizeformat(testData[0])).toBe(testData[1]);
+      expect(filesizeformat(testData[0])).toBe(testData[1]);
     });
   });
 
@@ -61,7 +59,7 @@ describe("filesizeformat", () => {
     test(`localized negative number ${index + 1}: ${testData[0]} -> ${
       testData[1]
     }`, () => {
-      expect(djangoFilters.filesizeformat(testData[0])).toBe(testData[1]);
+      expect(filesizeformat(testData[0])).toBe(testData[1]);
     });
   });
 });

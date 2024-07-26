@@ -1,25 +1,11 @@
-Object.defineProperty(navigator, "language", {
-  get: function () {
-    return "xx-XX";
-  },
-});
-
-const { djangoFilters } = require("../dist/django-filters");
+import { translate } from "../dist/_utils.js";
 
 describe("_utils.translate", () => {
-  beforeAll(() => {
-    djangoFilters.translations["en-us"].testing = {
-      monkeybat: "monkeybat",
-    };
-  });
-
   test("matched translation", () => {
-    expect(djangoFilters._utils.translate("testing", "monkeybat")).toBe(
-      "monkeybat"
-    );
+    expect(translate("apnumbers", 0, "es-US")).toBe("zero");
   });
 
-  test("unmatched translation in supported language", () => {
-    expect(djangoFilters._utils.translate("testing", "foo")).toBeUndefined();
+  test("unmatched translation in unsupported language", () => {
+    expect(translate("testing", "foo", "es-US")).toBeUndefined();
   });
 });

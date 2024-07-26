@@ -1,23 +1,26 @@
-const { djangoFilters } = require("../dist/django-filters");
+import { timeuntil } from "../dist/timesince.js";
 
 const { timedelta } = require("./timesince.test");
 
 describe("timeuntil", () => {
   test("since now", () => {
     expect(
-      djangoFilters.timeuntil(
+      timeuntil(
         new Date(new Date().getTime() + timedelta({ days: 1, seconds: 1 }))
       )
     ).toBe("1\xa0day");
   });
 
   test("no argument", () => {
-    expect(djangoFilters.timeuntil(null)).toBe("");
+    const originalWarn = console.warn;
+    console.warn = jest.fn();
+    expect(timeuntil(null)).toBe("");
+    console.warn = originalWarn;
   });
 
   test("explicit date", () => {
-    expect(
-      djangoFilters.timeuntil(new Date(2005, 11, 30), new Date(2005, 11, 29))
-    ).toBe("1\xa0day");
+    expect(timeuntil(new Date(2005, 11, 30), new Date(2005, 11, 29))).toBe(
+      "1\xa0day"
+    );
   });
 });

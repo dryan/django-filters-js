@@ -1,4 +1,4 @@
-const { djangoFilters } = require("../dist/django-filters");
+import { default as djangoFilters } from "../dist/index.js";
 
 describe("phone2numeric", () => {
   test("1-800-call-me", () => {
