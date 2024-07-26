@@ -1,6 +1,6 @@
 {
   "name": "django-filters-js",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "A project to convert the default and contrib.humanize template filters from Django to JavaScript",
   "main": "./dist/index.js",
   "scripts": {
