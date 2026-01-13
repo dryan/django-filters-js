@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: false
+  commands:
+    # Format files
+    prettier:
+      glob: "*.{js,ts,json,css,html,md,yml,yaml}"
+      run: |
+        for f in {staged_files}; do
+          [ -f "$f" ] && [ ! -L "$f" ] && npx prettier --write "$f"
+        done
+      stage_fixed: true
+
+    # Lint JavaScript/TypeScript
+    eslint:
+      glob: "*.{js,ts,json}"
+      run: |
+        FILES=$(for f in {staged_files}; do
+          [ -f "$f" ] && echo "$f"
+        done)
+        [ -z "$FILES" ] || npx eslint --fix $FILES
+      stage_fixed: true
