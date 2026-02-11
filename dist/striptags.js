@@ -1,13 +1,21 @@
 export const striptags = (value) => {
   value = value.toString();
-  // Apply replacement repeatedly to prevent tag re-injection
-  // and limit ReDoS by ensuring we stop when no more matches
-  let previous;
-  do {
-    previous = value;
-    value = value.replace(/<[^>]*>/g, "");
-  } while (value !== previous);
-  return value;
+  // Use character-by-character state machine to avoid ReDoS
+  // This is O(n) with no backtracking, unlike regex approaches
+  let result = "";
+  let insideTag = false;
+  for (let i = 0; i < value.length; i++) {
+    const char = value[i];
+    if (char === "<") {
+      insideTag = true;
+    } else if (char === ">" && insideTag) {
+      // Only treat > as closing tag if we're inside a tag
+      insideTag = false;
+    } else if (!insideTag) {
+      result += char;
+    }
+  }
+  return result;
 };
 export const stripTags = striptags;
 //# sourceMappingURL=striptags.js.map
