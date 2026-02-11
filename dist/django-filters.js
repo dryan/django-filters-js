@@ -730,7 +730,11 @@
   // src/striptags.ts
   var striptags = (value) => {
     value = value.toString();
-    value = value.replace(/<[^>]*>/g, "");
+    let previous;
+    do {
+      previous = value;
+      value = value.replace(/<[^>]*>/g, "");
+    } while (value !== previous);
     return value;
   };
   var stripTags = striptags;
