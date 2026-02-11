@@ -1,11 +1,16 @@
 (() => {
   // src/addslashes.ts
-  var addslashes = (value) => value.toString().replace(/\\/g, String.raw`\\`).replace(/"/g, '\\"').replace(/'/g, "\\'");
+  var addslashes = (value) =>
+    value
+      .toString()
+      .replace(/\\/g, "\\\\")
+      .replace(/"/g, '\\"')
+      .replace(/'/g, "\\'");
   var addSlashes = addslashes;
 
   // src/translations.ts
   var translations = {};
-  (function() {
+  (function () {
     const addTranslation = (languageCode, group, strings) => {
       translations[languageCode] = translations[languageCode] || {};
       translations[languageCode][group] = Object.assign(
@@ -23,7 +28,7 @@
       6: "six",
       7: "seven",
       8: "eight",
-      9: "nine"
+      9: "nine",
     });
     addTranslation("en-us", "days:long", {
       0: "Sunday",
@@ -32,7 +37,7 @@
       3: "Wednesday",
       4: "Thursday",
       5: "Friday",
-      6: "Saturday"
+      6: "Saturday",
     });
     addTranslation("en-us", "days:short", {
       0: "Sun",
@@ -41,7 +46,7 @@
       3: "Wed",
       4: "Thu",
       5: "Fri",
-      6: "Sat"
+      6: "Sat",
     });
     addTranslation("en-us", "filesizeformat", {
       byte: "byte",
@@ -50,17 +55,17 @@
       MB: "MB",
       GB: "GB",
       TB: "TB",
-      PB: "PB"
+      PB: "PB",
     });
     addTranslation("en-us", "meridians", {
       am: "AM",
       pm: "PM",
       0: "midnight",
-      12: "noon"
+      12: "noon",
     });
     addTranslation("en-us", "meridians:ap", {
       am: "a.m.",
-      pm: "p.m."
+      pm: "p.m.",
     });
     addTranslation("en-us", "months:long", {
       0: "January",
@@ -74,7 +79,7 @@
       8: "September",
       9: "October",
       10: "November",
-      11: "December"
+      11: "December",
     });
     addTranslation("en-us", "months:short", {
       0: "Jan",
@@ -88,7 +93,7 @@
       8: "Sep",
       9: "Oct",
       10: "Nov",
-      11: "Dec"
+      11: "Dec",
     });
     addTranslation("en-us", "months:ap", {
       0: "Jan.",
@@ -102,7 +107,7 @@
       8: "Sept.",
       9: "Oct.",
       10: "Nov.",
-      11: "Dec."
+      11: "Dec.",
     });
     addTranslation("en-us", "ordinals", {
       0: "th",
@@ -115,7 +120,7 @@
       7: "th",
       8: "th",
       9: "th",
-      "11-13": "th"
+      "11-13": "th",
     });
     addTranslation("en-us", "timeunits", {
       year: ["year", "years"],
@@ -124,7 +129,7 @@
       day: ["day", "days"],
       hour: ["hour", "hours"],
       minute: ["minute", "minutes"],
-      separator: ", "
+      separator: ", ",
     });
   })();
   translations.en = translations["en-us"];
@@ -159,7 +164,9 @@
     return date2;
   };
   var getLanguageCode = () => {
-    return (navigator && navigator.language ? navigator.language : "en-US").toLowerCase().replace("_", "-");
+    return (navigator && navigator.language ? navigator.language : "en-US")
+      .toLowerCase()
+      .replace("_", "-");
   };
   function translate(group, id, languageCode) {
     languageCode = languageCode || getLanguageCode().toLowerCase();
@@ -179,7 +186,10 @@
   translate.translations = translations;
   var urlquote = (value, safe = "/") => {
     value = value.toString();
-    safe = safe.split("").map((chr) => `\\${chr}`).join("|");
+    safe = safe
+      .split("")
+      .map((chr) => `\\${chr}`)
+      .join("|");
     const notSafe = new RegExp(`[^${safe}]`, "g");
     return value.replace(notSafe, encodeURIComponent);
   };
@@ -226,7 +236,10 @@
 
   // src/date.ts
   function date(value, format = date.defaultFormats.date) {
-    if (!value || value.toString && value.toString().toLowerCase() === "invalid date") {
+    if (
+      !value ||
+      (value.toString && value.toString().toLowerCase() === "invalid date")
+    ) {
       return null;
     }
     const jan1 = new Date(value.getFullYear(), 0, 1);
@@ -239,8 +252,14 @@
       return hours;
     };
     const formats = {
-      a: value.getHours() < 12 ? translate("meridians:ap", "am") : translate("meridians:ap", "pm"),
-      A: value.getHours() < 12 ? translate("meridians", "am") : translate("meridians", "pm"),
+      a:
+        value.getHours() < 12
+          ? translate("meridians:ap", "am")
+          : translate("meridians:ap", "pm"),
+      A:
+        value.getHours() < 12
+          ? translate("meridians", "am")
+          : translate("meridians", "pm"),
       b: translate("months:short", value.getMonth()).toLowerCase(),
       d: padStart(value.getDate().toString(), 2, 0),
       D: translate("days:short", value.getDay()),
@@ -267,11 +286,19 @@
       n: (value.getMonth() + 1).toString(),
       N: translate("months:ap", value.getMonth()),
       O: ((v) => {
-        const offsetHours = Math.ceil(v.getTimezoneOffset() / 60), offsetMinutes = Math.abs(v.getTimezoneOffset() % 60);
-        return (offsetHours <= 0 ? "+" : "-") + padStart(Math.abs(offsetHours).toString(), 2, 0) + padStart(offsetMinutes.toString(), 2, 0);
+        const offsetHours = Math.ceil(v.getTimezoneOffset() / 60),
+          offsetMinutes = Math.abs(v.getTimezoneOffset() % 60);
+        return (
+          (offsetHours <= 0 ? "+" : "-") +
+          padStart(Math.abs(offsetHours).toString(), 2, 0) +
+          padStart(offsetMinutes.toString(), 2, 0)
+        );
       })(value),
       P: ((v) => {
-        if ((v.getHours() === 0 || v.getHours() === 12) && v.getMinutes() === 0) {
+        if (
+          (v.getHours() === 0 || v.getHours() === 12) &&
+          v.getMinutes() === 0
+        ) {
           return translate("meridians", v.getHours());
         }
         const ret2 = [normalize12Hours(v.getHours())];
@@ -281,21 +308,30 @@
         }
         ret2.push(" ");
         ret2.push(
-          v.getHours() < 12 ? translate("meridians:ap", "am") : translate("meridians:ap", "pm")
+          v.getHours() < 12
+            ? translate("meridians:ap", "am")
+            : translate("meridians:ap", "pm")
         );
         return ret2.map((p) => p.toString()).join("");
       })(value),
       s: padStart(value.getSeconds().toString(), 2, 0),
       S: ordinal(value.getDate()).replace(value.getDate().toString(), ""),
-      t: (32 - new Date(value.getFullYear(), value.getMonth(), 32).getDate()).toString(),
-      T: ((v) => v.toLocaleTimeString(navigator?.language ?? "en-US", {
-        timeZoneName: "short"
-      }).split(" ")[2])(value),
+      t: (
+        32 - new Date(value.getFullYear(), value.getMonth(), 32).getDate()
+      ).toString(),
+      T: ((v) =>
+        v
+          .toLocaleTimeString(navigator?.language ?? "en-US", {
+            timeZoneName: "short",
+          })
+          .split(" ")[2])(value),
       u: (value.getMilliseconds() * 1e3).toString(),
       U: Math.floor(value.getTime() / 1e3).toString(),
       w: value.getDay().toString(),
       W: ((v) => {
-        const d = new Date(Date.UTC(v.getFullYear(), v.getMonth(), v.getDate()));
+        const d = new Date(
+          Date.UTC(v.getFullYear(), v.getMonth(), v.getDate())
+        );
         const dayNum = d.getUTCDay() || 7;
         d.setUTCDate(d.getUTCDate() + 4 - dayNum);
         const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
@@ -308,8 +344,11 @@
       z: Math.ceil((value.getTime() - jan1.getTime()) / 864e5).toString(),
       Z: ((v) => {
         const offsetSeconds = v.getTimezoneOffset() * 60 * -1;
-        return (offsetSeconds < 0 ? "-" : "") + padEnd(Math.abs(offsetSeconds).toString(), 5, 0);
-      })(value)
+        return (
+          (offsetSeconds < 0 ? "-" : "") +
+          padEnd(Math.abs(offsetSeconds).toString(), 5, 0)
+        );
+      })(value),
     };
     formats.c = [
       formats.Y,
@@ -324,7 +363,7 @@
       ":",
       formats.s,
       ".",
-      padStart(formats.u, 6, 0)
+      padStart(formats.u, 6, 0),
     ].join("");
     formats.r = [
       formats.D,
@@ -341,7 +380,7 @@
       ":",
       formats.s,
       " ",
-      formats.O
+      formats.O,
     ].join("");
     const ret = [];
     format.match(/(\\?.)/g).forEach((f) => {
@@ -358,13 +397,18 @@
   }
   date.defaultFormats = {
     date: "N j, Y",
-    time: "P"
+    time: "P",
   };
 
   // src/escape.ts
   var escape = (value) => {
     value = value.toString();
-    value = value.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#x27;").replace(/"/g, "&quot;").replace(/&(?!\w+;|#[0-9]+;|#x[0-9A-F]+;)/g, "&amp;");
+    value = value
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/'/g, "&#x27;")
+      .replace(/"/g, "&quot;")
+      .replace(/&(?!\w+;|#[0-9]+;|#x[0-9A-F]+;)/g, "&amp;");
     return value;
   };
 
@@ -413,7 +457,7 @@
     "": "\\u001C",
     "": "\\u001D",
     "": "\\u001E",
-    "": "\\u001F"
+    "": "\\u001F",
   };
   var escapejs = (value) => {
     value = value.toString();
@@ -430,7 +474,7 @@
   var filesizeNumberFormat = (number, useL10n) => {
     if (useL10n) {
       const formatter = new Intl.NumberFormat(getLanguageCode(), {
-        minimumFractionDigits: 1
+        minimumFractionDigits: 1,
       });
       return formatter.format(parseFloat(number.toFixed(1)));
     }
@@ -512,12 +556,15 @@
     const formatterOptions = {
       useGrouping: grouping,
       maximumFractionDigits: Math.abs(precision),
-      trailingZeroDisplay: precision < 0 ? "stripIfInteger" : "auto"
+      trailingZeroDisplay: precision < 0 ? "stripIfInteger" : "auto",
     };
-    if (precision >= 0 || precision < 0 && value % 1 !== 0) {
+    if (precision >= 0 || (precision < 0 && value % 1 !== 0)) {
       formatterOptions.minimumFractionDigits = Math.abs(precision);
     }
-    const formatter = new Intl.NumberFormat(getLanguageCode(), formatterOptions);
+    const formatter = new Intl.NumberFormat(
+      getLanguageCode(),
+      formatterOptions
+    );
     let output = formatter.format(value);
     if (parseFloat(output) === 0) {
       if (output.startsWith("-")) {
@@ -623,10 +670,14 @@
       w: "9",
       x: "9",
       y: "9",
-      z: "9"
+      z: "9",
     };
     value = value.toString();
-    value = value.toLowerCase().split("").map((char) => char2number[char] || char).join("");
+    value = value
+      .toLowerCase()
+      .split("")
+      .map((char) => char2number[char] || char)
+      .join("");
     return value;
   };
   var phone2Numeric = phone2numeric;
@@ -665,16 +716,21 @@
     } else {
       value = value.normalize("NFKD").replace(/[^\u0020-\u007F]/g, "");
     }
-    return value.trim().toLowerCase().replace(
-      /[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}]/gu,
-      "-"
-    ).replace(/[-\s]+/gu, "-").replace(/^-|-$/gu, "");
+    return value
+      .trim()
+      .toLowerCase()
+      .replace(
+        /[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}]/gu,
+        "-"
+      )
+      .replace(/[-\s]+/gu, "-")
+      .replace(/^-|-$/gu, "");
   };
 
   // src/striptags.ts
   var striptags = (value) => {
     value = value.toString();
-    value = value.replace(/<(?:.|\s)*?>/g, "");
+    value = value.replace(/<[^>]*>/g, "");
     return value;
   };
   var stripTags = striptags;
@@ -691,7 +747,7 @@
     [60 * 60 * 24 * 7, "week"],
     [60 * 60 * 24, "day"],
     [60 * 60, "hour"],
-    [60, "minute"]
+    [60, "minute"],
   ];
   var _isLeapYear = (year) => {
     if (year % 4 === 0) {
@@ -709,7 +765,9 @@
     if (year1 === year2) {
       return 0;
     }
-    return Array.from(Array(Math.abs(year2 - year1)).keys()).map((_, i) => _isLeapYear(year1 + i) ? year2 >= year1 ? 1 : -1 : 0).reduce((total, value) => total + value);
+    return Array.from(Array(Math.abs(year2 - year1)).keys())
+      .map((_, i) => (_isLeapYear(year1 + i) ? (year2 >= year1 ? 1 : -1) : 0))
+      .reduce((total, value) => total + value);
   };
   var _timeSince = (d, now = void 0, reversed = false) => {
     d = parseDate(d);
@@ -762,14 +820,15 @@
               count2,
               translate("timeunits", name2)?.join(",")
             )}`
-          )
+          ),
         ].join("");
       }
     }
     return result;
   };
   var timesince = (value, compareTo = void 0) => _timeSince(value, compareTo);
-  var timeuntil = (value, compareTo = void 0) => _timeSince(value, compareTo, true);
+  var timeuntil = (value, compareTo = void 0) =>
+    _timeSince(value, compareTo, true);
   var timeSince = timesince;
   var timeUntil = timeuntil;
 
@@ -778,10 +837,11 @@
     value = value.toString();
     value = value.replace(
       /[\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}]*/gu,
-      (txt) => [
-        txt.charAt(0).toUpperCase(),
-        txt.slice(1, txt.length).toLowerCase()
-      ].join("")
+      (txt) =>
+        [
+          txt.charAt(0).toUpperCase(),
+          txt.slice(1, txt.length).toLowerCase(),
+        ].join("")
     );
     value = value.replace(
       /([a-zA-Z])'([A-Z])/g,
@@ -798,7 +858,7 @@
   var urlEncode = urlencode;
 
   // src/index.ts
-  var src_default = {
+  var index_default = {
     addslashes,
     addSlashes,
     apnumber,
@@ -842,9 +902,9 @@
     title,
     upper,
     urlencode,
-    urlEncode
+    urlEncode,
   };
 
   // src/django-filters.ts
-  window.djangoFilters = src_default;
+  window.djangoFilters = index_default;
 })();

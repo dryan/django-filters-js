@@ -1,6 +1,6 @@
 export const striptags = (value: string) => {
   value = value.toString();
-  value = value.replace(/<(?:.|\s)*?>/g, "");
+  value = value.replace(/<[^>]*>/g, "");
   return value;
 };
 
