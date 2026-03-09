@@ -55,7 +55,8 @@
     "vitest": "^4.0.17"
   },
   "overrides": {
-    "serialize-javascript": "^7.0.4"
+    "serialize-javascript": "^7.0.4",
+    "koa": "^2.16.4"
   },
   "jest": {
     "coverageThreshold": {
