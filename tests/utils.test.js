@@ -61,7 +61,7 @@ describe("_utils.parseDate", () => {
 
   test("invalid datetime string", () => {
     const originalWarn = console.warn;
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     expect(parseDate("monkeybat")).toBe(null);
     expect(console.warn).toHaveBeenCalled();
     console.warn = originalWarn;

@@ -11,7 +11,12 @@ export default defineConfig({
     environment: "node",
 
     // Include test files
-    include: ["src/**/*.test.ts", "tests/**/*.test.ts", "**/*.spec.ts"],
+    include: [
+      "src/**/*.test.ts",
+      "tests/**/*.test.ts",
+      "tests/**/*.test.js",
+      "**/*.spec.ts",
+    ],
 
     // Exclude files
     exclude: ["node_modules", "dist", "build", ".vscode"],

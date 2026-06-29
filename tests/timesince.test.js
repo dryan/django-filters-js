@@ -1,36 +1,5 @@
 import { timesince } from "../dist/timesince.js";
-
-const timedelta = (opts) => {
-  const MILLISECOND = 1;
-  const SECOND = MILLISECOND * 1000;
-  const MINUTE = SECOND * 60;
-  const HOUR = MINUTE * 60;
-  const DAY = HOUR * 24;
-  const WEEK = DAY * 7;
-
-  let { days, seconds, milliseconds, minutes, hours, weeks } = opts;
-  days = typeof days === "undefined" ? 0 : days;
-  seconds = typeof seconds === "undefined" ? 0 : seconds;
-  milliseconds = typeof milliseconds === "undefined" ? 0 : milliseconds;
-  minutes = typeof minutes === "undefined" ? 0 : minutes;
-  hours = typeof hours === "undefined" ? 0 : hours;
-  weeks = typeof weeks === "undefined" ? 0 : weeks;
-
-  return [
-    milliseconds * MILLISECOND,
-    seconds * SECOND,
-    minutes * MINUTE,
-    hours * HOUR,
-    days * DAY,
-    weeks * WEEK,
-  ].reduce((total, ms) => total + ms);
-};
-
-if (module && module.exports) {
-  module.exports = {
-    timedelta,
-  };
-}
+import { timedelta } from "./helpers.js";
 
 describe("timesince", () => {
   test("since now", () => {
@@ -73,7 +42,7 @@ describe("timesince", () => {
 
   test("no argument", () => {
     const originalWarn = console.warn;
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     expect(timesince(null)).toBe("");
     console.warn = originalWarn;
   });

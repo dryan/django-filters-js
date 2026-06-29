@@ -1,6 +1,5 @@
 import { timeuntil } from "../dist/timesince.js";
-
-const { timedelta } = require("./timesince.test");
+import { timedelta } from "./helpers.js";
 
 describe("timeuntil", () => {
   test("since now", () => {
@@ -13,7 +12,7 @@ describe("timeuntil", () => {
 
   test("no argument", () => {
     const originalWarn = console.warn;
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     expect(timeuntil(null)).toBe("");
     console.warn = originalWarn;
   });
