@@ -56,7 +56,9 @@
   },
   "overrides": {
     "serialize-javascript": "^7.0.5",
-    "koa": "^2.16.4"
+    "koa": "^2.16.4",
+    "basic-ftp": ">=5.2.1",
+    "js-yaml": ">=4.1.1"
   },
   "jest": {
     "coverageThreshold": {
