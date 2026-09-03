@@ -9,6 +9,7 @@ export default defineConfig({
   test: {
     // Test environment
     environment: "node",
+    env: { TZ: "America/New_York" },
 
     // Include test files
     include: [
