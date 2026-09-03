@@ -5,6 +5,10 @@ on:
   push:
     branches: [main, master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
     uses: dryan/reusable-workflows/.github/workflows/dependabot-ci.yml@v1
