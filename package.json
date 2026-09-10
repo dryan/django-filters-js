@@ -29,8 +29,8 @@
     "@types/node": "^25.0.8",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
-    "@vitest/coverage-v8": "^4.1.8",
-    "@vitest/ui": "^4.1.8",
+    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/ui": "^4.1.11",
     "@web/test-runner": "^1.0.0",
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-playwright": "^0.11.1",
@@ -49,10 +49,9 @@
     "timezoned-date": "^3.0.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.11"
   },
   "overrides": {
-    "serialize-javascript": "^7.0.5",
-    "koa": "^2.16.4"
+    "serialize-javascript": "^7.0.5"
   }
 }
