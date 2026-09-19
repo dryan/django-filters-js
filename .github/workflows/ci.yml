@@ -14,4 +14,4 @@ concurrency:
 
 jobs:
   ci:
-    uses: dryan/reusable-workflows/.github/workflows/dependabot-ci.yml@v1
+    uses: dryan/reusable-workflows/dependabot-ci.yml@v2
