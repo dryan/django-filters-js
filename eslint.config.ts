@@ -12,7 +12,6 @@ const config: Linter.Config[] = [
       "dist/**",
       "build/**",
       ".vscode/**",
-      ".rollup.cache/**",
       "coverage/**",
       "package-lock.json",
       "*.backup.*",
@@ -20,8 +19,6 @@ const config: Linter.Config[] = [
       "!*.config.js", // But don't ignore config files
       "!eslint.config.js",
       "!eslint.config.ts",
-      "!rollup.config.js",
-      "!web-test-runner.config.js",
       "!scripts/**/*.js",
       // Python
       "__pycache__/**",

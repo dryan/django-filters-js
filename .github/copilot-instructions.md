@@ -255,12 +255,7 @@ check: lint typecheck test
 
 ### Web Components Testing
 
-Use `@web/test-runner` for browser-based tests:
-
-- Test actual browser behavior
-- Test with real Shadow DOM
-- Use `@web/test-runner-commands` for advanced interactions
-- Test across multiple browsers (Chromium, Firefox, WebKit)
+Use `vitest` for tests (`npm test`).
 
 **Browser Debugging:**
 
