@@ -17,6 +17,9 @@
   },
   "author": "Dan Ryan",
   "license": "MIT",
+  "overrides": {
+    "minimatch": "^11.0.1"
+  },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@eslint/js": "^9.39.2",
